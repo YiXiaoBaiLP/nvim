@@ -1,8 +1,29 @@
 --[[
-   基础的选择项配置
+   NVIM 基础的选择项配置
 --]]
+local g = vim.g
+local cmd = vim.cmd
+local o, wo, bo = vim.o, vim.wo, vim.bo
 
-local bind = require "bind";
+
+-- 不启用vi的键盘模式,关闭兼容模式(必须设置在开头)
+--o.compatible = true
+-- 设置历史操作记录为2000条
+o.history = 2000
+-- 语法高亮支持
+--o.syntax = true
+
+o.fileformats = "unix,mac,dos"
+o.number = true
+o.cmdheight = 2
+-- 关闭八进制
+o.nrformats = "bin,hex"
+-- 显示特殊字符，其中Tab使用高亮~代替，尾部空白使用高亮点号代替
+o.list = true
+--o.listchars = "tab:\|\ ,trail:▫"
+o.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
+
+local bind = require "bind"
 local options = setmetatable({}, {__index = {global_local = {}, window_local = {}}})
 
 function options:local_options()
