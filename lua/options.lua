@@ -1,27 +1,64 @@
 --[[
    NVIM 基础的选择项配置
 --]]
-local g = vim.g
-local cmd = vim.cmd
-local o, wo, bo = vim.o, vim.wo, vim.bo
+
+local M = {}
+
+M.load_options = function()
+  local opt = vim.opt
+
+  local default_options = {
+    -- 关闭文件备份
+    backup = false,
+    -- 使用系统剪贴版
+    clipboard = "unnamedplus",
+    -- 使neovim命令行中有更多显示消息的空间
+    cmdheight = 2,
+    -- 修复索引线
+    colorcolumn = "99999",
+    completeopt = { "menuone", "noselect" },
+    -- so that `` is visible in markdown files
+    conceallevel = 0,
+    -- 设置历史操作记录为2000条
+    history = 2000,
+    -- 
+    fileformats = "unix,mac,dos"
+    -- 显示行号
+    number = true
+    -- 关闭八进制
+    nrformats = "bin,hex"
+    -- 显示特殊字符，其中Tab使用高亮~代替，尾部空白使用高亮点号代替
+    list = true
+    listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
+  }
+  
+  for k, v in pairs(default_options) do
+    vim.opt[k] = v
+  end
+end
+
+M.load_commands = function()
+  local cmd = vim.cmd
+  if lvim.line_wrap_cursor_movement then
+    cmd "set whichwrap+=<,>,[,],h,l"
+  end
+
+  if lvim.transparent_window then
+    cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
+    cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
+    cmd "let &fcs='eob: '"
+  end
+end
+
+return M
 
 
--- 不启用vi的键盘模式,关闭兼容模式(必须设置在开头)
---o.compatible = true
--- 设置历史操作记录为2000条
-o.history = 2000
--- 语法高亮支持
---o.syntax = true
-
-o.fileformats = "unix,mac,dos"
-o.number = true
-o.cmdheight = 2
--- 关闭八进制
-o.nrformats = "bin,hex"
--- 显示特殊字符，其中Tab使用高亮~代替，尾部空白使用高亮点号代替
-o.list = true
---o.listchars = "tab:\|\ ,trail:▫"
-o.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←"
+-- 以上参考配置
+--https://github.com/LunarVim/LunarVim/blob/rolling/lua/settings.lua
 
 local bind = require "bind"
 local options = setmetatable({}, {__index = {global_local = {}, window_local = {}}})
