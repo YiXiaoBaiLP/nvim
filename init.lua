@@ -8,6 +8,9 @@ require("options")
 -- 加载插件管理器
 require("plugins")
 
+-- 获取home路径
+local home_dir = vim.loop.os_homedir()
+
 
 -- nvim 配置
 local g = vim.g
