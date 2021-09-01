@@ -3,7 +3,8 @@
 	整合所有的配置文件,不单独配置任何东西
 --]]
 
-require("options")
+local options = require("options")
+options.load_options()
 
 -- 加载插件管理器
 require("plugins")
