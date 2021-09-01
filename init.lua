@@ -4,6 +4,7 @@
 --]]
 
 local options = require("options")
+-- 加载基础配置信息
 options.load_options()
 
 -- 加载插件管理器

@@ -1,13 +1,11 @@
 --[[
-   NVIM 基础的选择项配置
+   基础选择项配置
 --]]
 
-local _M = {}
+local M = {}
 
-function _M.get()
-  
+M.load_options = function()
   local opt = vim.opt
-
   local default_options = {
     -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
     termguicolors = true,
@@ -31,12 +29,8 @@ function _M.get()
     swapfile = false,
     -- 使用系统剪贴版
     clipboard = "unnamedplus",
-    -- 使neovim命令行中有更多显示消息的空间
-    cmdheight = 2,
     -- 修复索引线
     colorcolumn = "99999",
-    -- 用于插入模式的补全操作
-    completeopt = { "menuone", "noselect" },
     -- so that `` is visible in markdown files
     conceallevel = 0,
     -- 设置历史操作记录为2000条
@@ -45,6 +39,8 @@ function _M.get()
     fileformats = "unix,dos,mac",
     -- 显示行号
     number = true,
+    -- 相对的显示行号
+    relativenumber = true,
     -- 关闭八进制
     nrformats = "bin,hex",
 
@@ -61,79 +57,125 @@ function _M.get()
     wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
     -- 显示历史记录为：2000
     history = 2000,
-    shada = "!, '300,<50,@100,s10,h'",
+    --shada = "!, '300,<50,@100,s10,h'",
     -- 跳过此目录的文件备份
     backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
-    -- 打开时，行首的<Tab> 根据 shiftwidth 选项插入空白
-    smarttab = true,
     -- 缩进取整到 shiftwidth的倍数，用于 > 和 < 命令
     shiftround = true,
     -- 打开映射的超时选项
     timeout = true,
     -- 打开键码的超时选项
     ttimeout = true,
-    -- 
+    -- 毫秒计的等待键码或者映射的键序列完成的时间
     timeoutlen = 500,
     ttimeoutlen = 10,
+    -- 间隔100毫秒没有输入，则将内容写入磁盘
     updatetime = 100,
     --readrawtime = 1500,
+    -- 搜索时忽略大小写
     ignorecase = true,
+    -- 查找时，小写字母也可以匹配大写字母
     smartcase = true,
+    -- 插入模式总的补全
     infercase = true,
+    -- 查找时高亮匹配的字符
     incsearch = true,
+    -- 打开回绕查询
     wrapscan = true,
-    complete = "., w, b, k",
+    -- 设置插入模式补全的匹配
+    complete = ".,w,b,k",
     inccommand = "nosplit",
+    -- 识别 :grep命令的输出格式
     grepformat = "%f:%l:%c:%m",
     grepprg = "rg --hidden --vimgrep --smart-case --",
+    -- 可以指定的字符中换行
     breakat = [[\ \ ;:,!?]],
+    -- 页面移动时不将光标移动到第一个非空字符上，而是保持在本列中
     startofline = false,
+    -- 当光标到最右边或者最左边，按以下按键光标会移动到上一行或下一行
     whichwrap = "h,l,<,>,[,],~",
+    -- 窗口分割时，将新的窗口放到当前窗口的下方
     splitbelow = true,
+    -- 窗口分割时，将新的窗口放到当前窗口的右方
     splitright = true,
+    -- 控制缓冲区的切换行为
     switchbuf = "useopen",
     backspace = "indent,eol,start",
+    -- 比较模式的选项
     diffopt = "filler,iwhite,internal,algorithm:patience",
+    -- 用于插入模式的补全操作
     completeopt = "menu,menuone,noselect",
     jumpoptions = "stack",
+    -- 在插入、替换和可视模式里，在最后一行提供消息
     showmode = false,
+    -- 底部状态信息显示的内容选项
     shortmess = "aoOTIcF",
+    -- 光标上下最少保留的屏幕行
     scrolloff = 5,
+    -- 光标两侧最少保留的屏幕行
     sidescrolloff = 5,
+    -- 文件内容是否有折叠（99:没有折叠）
     foldlevelstart = 99,
-    ruler = false,
+    -- 标尺，显示光标位置的行号和列号
+    ruler = true,
+    -- 永远显示标签页与标签行
     showtabline = 2,
+    -- 窗口的宽度
     winwidth = 30,
-    winminwidth = 10,
-    pumheight = 15,
-    helpheight = 12,
-    previewheight = 12,
-    showcmd = false,
+    -- 窗口的最小宽度
+    winminwidth = 12,
+    -- 插入模式补全弹出菜单显示项目的最大数目
+    pumheight = 17,
+    -- 使用 :help 命令打开窗口的宽度
+    helpheight = 17,
+    -- 预览窗口的高度
+    previewheight = 17,
+    -- 屏幕最后一行显示命令（如果终端变得很慢，关闭此选项）
+    showcmd = true,
+    -- 命令行使用的屏幕行数
     cmdheight = 2,
-    cmdwinheight = 5,
+    -- 打开命令窗口的大小 普通界面 q: 打开 或者命令行 :<C-F> 打开 
+    cmdwinheight = 12,
+    -- 关闭：分割窗口会减少当前窗口的尺寸，并保持其他窗口不变
+    -- 如果关闭窗口，额外的空间分配给紧邻的窗口
     equalalways = false,
+    -- 最后一个什么时候有状态行（2:总是拥有）
     laststatus = 2,
     display = "lastline",
+    -- 回绕行放置在开头的字符串
     showbreak = "↳  ",
     -- 显示特殊字符，其中Tab使用高亮~代替，尾部空白使用高亮点号代替
     list = true,
     listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
+    -- 打开时，行首的<Tab> 根据 shiftwidth 选项插入空白
+    smarttab = true,
+    -- 设置 TAB 的长度
+    tabstop = 4,
+    -- 编辑时，插入<Tab>或者使用<BS>时，把<TAB>算作空格的数目
+    softtabstop = 4,
+    -- 缩进的长度
+    shiftwidth = 4,
+    -- 将TAB转换成空格
+    expandtab = true,
+    -- 使用'<' 或 ’'>' 缩进时将<Tab>替换成空格 
+    autoindent = true,
     pumblend = 10,
     winblend = 10,
     -- spell = true,
+    -- 对指定的语言进行拼写检查
     spelllang = "en_us,cjk"
   }
-  
+
   for k, v in pairs(default_options) do
     opt[k] = v
   end
 end
 
-_M.load_commands = function()
-local cmd = vim.cmd
-if lvim.line_wrap_cursor_movement then
-  cmd "set whichwrap+=<,>,[,],h,l"
-end
+M.load_commands = function()
+  local cmd = vim.cmd
+  if lvim.line_wrap_cursor_movement then
+    cmd "set whichwrap+=<,>,[,],h,l"
+  end
 
   if lvim.transparent_window then
     cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
@@ -146,62 +188,4 @@ end
   end
 end
 
-return setmetatable({}, {__index = function(_, ...) return _M.get(...) end})
-
-
-
-
--- 以上参考配置
---https://github.com/LunarVim/LunarVim/blob/rolling/lua/settings.lua
---[[
-local bind = require "bind"
-local options = setmetatable({}, {__index = {global_local = {}, window_local = {}}})
-
-function options:local_options()
-  self.global_local = {
-   
-  }
-
-  self.bw_local = {
-    undofile = true,
-    synmaxcol = 2500,
-    formatoptions = "1jcroql",
-    textwidth = 80,
-    expandtab = true,
-    autoindent = true,
-    tabstop = 2,
-    shifwtidth = 2,
-    softtabstop = -1,
-    breakindentopt = "shift:2, min20",
-    wrap = false,
-    linebreak = true,
-    number = true,
-    colorcolumn = "80",
-    foldenable = true,
-    signcolumn = "yes",
-    conceallevel = 2,
-    concealcursor = "niv"
-  }
-
-  if vim.loop.os_uname().sysname == "Darwin" then
-    vim.g.clipboard = {
-      name = "macOS.clipboard",
-      copy = {
-        ["+"] = "pbcopy",
-        ["+"] = "pbcopy"
-      },
-      paste = {
-        ["+"] = "pbpaste",
-        ["+"] = "pbpaste"
-      },
-      cache_enabled = 0
-    }
-  end
-  for name, value in pairs(self.global_local) do
-    vim.o[name] = value
-  end
-  bind.bind_option(self.bw_local);
-end
-
-return options;
---]]
+return M
