@@ -1,7 +1,14 @@
 local packer = nil
+local packerCompiled = vim.fn.stdpath("data") .. "/site/packer_comiled.vim"
 
 local function init()
+    local installPath = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+    if vim.fn.empty(vim.fn.glob(installPath)) > 0 then
+        vim.api.nvim_command("!git clone https://github.com/wbthomason/packer.nvim " .. installPath)
+    end
+    
 	if packer == nil then
+        vim.cmd [[packadd packer.nvim]]
 		packer = require 'packer'
 		packer.init { disable_commands = true }
 	end
@@ -26,6 +33,11 @@ local function init()
 		require = {"kyazdani42/nvim-web-devicons"},
 		config = [[require("eviline")]]
 	}
+
+    -- kai ping
+    use {
+        "glepnir/dashboard.nvim"
+    }
 end
 
 local plugins = setmetatable({}, {

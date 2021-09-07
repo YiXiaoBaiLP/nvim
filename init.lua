@@ -10,6 +10,7 @@ options.load_options()
 -- 加载插件管理器
 require("plugins")
 
+vim.cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
 -- 获取home路径
 local home_dir = vim.loop.os_homedir()
 
