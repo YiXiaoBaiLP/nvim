@@ -7,10 +7,7 @@ local options = require("options")
 -- 加载基础配置信息
 options.load_options()
 
--- 加载插件管理器
-require("plugins")
 
-vim.cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
 -- 获取home路径
 local home_dir = vim.loop.os_homedir()
 
@@ -19,6 +16,15 @@ local home_dir = vim.loop.os_homedir()
 local g = vim.g
 local cmd = vim.cmd
 local o, wo, bo = vim.o, vim.wo, vim.bo
+
+-- 加载插件管理器
+-- Commands
+cmd [[command! WhatHighlight :call util#syntax_stack()]]
+cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
+cmd [[command! PackerUpdate packadd packer.nvim | lua require('plugins').update()]]
+cmd [[command! PackerSync packadd packer.nvim | lua require('plugins').sync()]]
+cmd [[command! PackerClean packadd packer.nvim | lua require('plugins').clean()]]
+cmd [[command! PackerCompile packadd packer.nvim | lua require('plugins').compile()]]
 
 -- Leader/local leader
 g.mapleader = [[ ]]
