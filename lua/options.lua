@@ -2,18 +2,24 @@
    基础选择项配置
 --]]
 
-local M = {}
+local _M = {};
 
-M.load_options = function()
-  local opt = vim.opt
-  local default_options = {
+-- 调用临时文件保存目录
+local cacheDir = require("cacheDir");
+print(cacheDir);
+
+local opt = vim.opt;
+local cmd = vim.cmd;
+
+function _M.get()
+  
+  local defautOptions = {
     -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
     termguicolors = true,
     -- 允许使用鼠标，a：所有模式中允许
     mouse = "a",
-    -- 开启错误信息响铃
-    errorbells = true,
-
+    -- 关闭错误信息响铃
+    errorbells = false,
     -- 使用可视响亮代替鸣叫
     visualbell = true,
     -- 提示缓冲区已经修改，但文件尚未保存
@@ -27,6 +33,12 @@ M.load_options = function()
     writebackup = false,
     -- 关闭缓冲区使用交换文件（关闭后不要在大文件，无法恢复）
     swapfile = false,
+    -- 配置备份文件存放路径
+    directory = cacheDir.cacheDir .. "swag/",
+    undodir = cacheDir.cacheDir .. "undo/",
+    backupdir = cacheDir.cacheDir .. "backup/",
+    viewdir = cacheDir.cacheDir .. "view/",
+    spellfile = cacheDir.cacheDir .. "spell/en.utf-8.add",
     -- 使用系统剪贴版
     clipboard = "unnamedplus",
     -- 修复索引线
@@ -43,7 +55,6 @@ M.load_options = function()
     relativenumber = true,
     -- 关闭八进制
     nrformats = "bin,hex",
-
     magic = true,
     -- 设置Vim的内部字符编码，作用于缓冲区、寄存器、表达式所用的字符串、viminfo保存的各种文本等
     encoding = "utf-8",
@@ -55,8 +66,6 @@ M.load_options = function()
     wildignorecase = true,
     -- 文件模式的列表，忽略这些文件
     wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
-    -- 显示历史记录为：2000
-    history = 2000,
     --shada = "!, '300,<50,@100,s10,h'",
     -- 跳过此目录的文件备份
     backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
@@ -165,27 +174,11 @@ M.load_options = function()
     -- 对指定的语言进行拼写检查
     spelllang = "en_us,cjk"
   }
-
-  for k, v in pairs(default_options) do
+  for k, v in pairs(defautOptions) do
     opt[k] = v
   end
+
 end
 
-M.load_commands = function()
-  local cmd = vim.cmd
-  if lvim.line_wrap_cursor_movement then
-    cmd "set whichwrap+=<,>,[,],h,l"
-  end
-
-  if lvim.transparent_window then
-    cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-    cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-    cmd "let &fcs='eob: '"
-  end
-end
-
-return M
+-----------------------------------------------------------
+return _M.get()
