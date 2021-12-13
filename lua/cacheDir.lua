@@ -7,12 +7,9 @@ local _M = {};
 local osName = vim.loop.os_uname().sysname;
 -- nvim的配置路径
 local vimPath = vim.fn.stdpath('config');
+local fn = vim.fn;
+local dirs = {};
 ---------------------------------------------------------------------------------------
-function _M.get()
-	local dirs = {};
-	dirs = setCacheDir(dirs);
-	return dirs;
-end
 
 -- 设置缓存以及备份目录
 function setCacheDir(dirs)
@@ -26,8 +23,36 @@ function setCacheDir(dirs)
     dirs.modulesDir = vimPath .. pathSep .. 'modules';
     dirs.home = home;
     dirs.data_dir = string.format('%s/site/', vim.fn.stdpath('data'));
-	return dirs;
+
+    return dirs;
 end
+
+local createDir = function ()
+    local dataDir = {
+        dirs.cacheDir .. 'backup',
+        dirs.cacheDir .. 'session',
+        dirs.cacheDir .. 'swap',
+        dirs.cacheDir .. 'tags',
+        dirs.cacheDir .. 'undo'
+    }
+
+    if fn.isdirectory(dirs.cacheDir) == 0 then
+        os.execute("mkdir -p " .. dirs.cacheDir);
+        for _,v in pairs(dataDir) do
+            if fn.isdirectory(v) == 0 then
+                os.execute("mkdir -p " .. v);
+            end
+        end
+    end
+end
+
+function _M.get()
+    dirs = setCacheDir(dirs);
+    createDir();
+
+    return dirs;
+end
+
 ---------------------------------------------------------------------------------------
 
 return _M.get();
