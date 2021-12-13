@@ -7,8 +7,6 @@ local _M = {};
 -- 调用临时文件保存目录
 local cacheDir = require("cacheDir");
 
-local opt, cmd, g = vim.opt, vim.cmd, vim.g;
-
 local defautOptions, opt = {
   -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
   termguicolors = true,
