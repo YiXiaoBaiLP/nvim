@@ -2,10 +2,10 @@
    基础选择项配置
 --]]
 
-local _M = {};
+local M = {};
 
 -- 调用临时文件保存目录
-local cacheDir = require("cacheDir");
+local cacheDir = require("core.cacheDir");
 
 local defautOptions, opt = {
   -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
@@ -191,11 +191,6 @@ local disableDistributionPlugins = {
     loaded_netrwFileHandlers = 1
 };
 
-function _M.get()
- forEach(defautOptions, vim.opt);
- forEach(disableDistributionPlugins, vim.g);
-end
-
 --
 -- 循环
 -- funName 函数名称
@@ -206,5 +201,10 @@ function forEach(funName, param)
   end
 end
 
+function M.get()
+ forEach(defautOptions, vim.opt);
+ forEach(disableDistributionPlugins, vim.g);
+end
+
 -----------------------------------------------------------
-return _M.get()
+return M.get()

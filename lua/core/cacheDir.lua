@@ -22,7 +22,7 @@ function setCacheDir(dirs)
     dirs.cacheDir = home .. pathSep .. '.cache' .. pathSep .. 'nvim' .. pathSep;
     dirs.modulesDir = vimPath .. pathSep .. 'modules';
     dirs.home = home;
-    dirs.data_dir = string.format('%s/site/', vim.fn.stdpath('data'));
+    dirs.dataDir = string.format('%s/site/', vim.fn.stdpath('data'));
 
     return dirs;
 end

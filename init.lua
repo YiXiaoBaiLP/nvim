@@ -8,7 +8,7 @@
 --]]
 
 -- 加载vim的基础配置
-require("options")
+require("core")
 
 -- vimscript中的全局编辑器变量
 local g = vim.g;
