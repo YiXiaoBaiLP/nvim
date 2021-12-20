@@ -7,7 +7,7 @@ local M = {};
 -- 调用临时文件保存目录
 local cacheDir = require("core.cacheDir");
 
-local defautOptions, opt = {
+local defautOptions = {
   -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
   termguicolors = true,
   -- 允许使用鼠标，a：所有模式中允许
@@ -202,7 +202,7 @@ function forEach(funName, param)
 end
 
 function M.get()
- forEach(defautOptions, vim.opt);
+ forEach(defautOptions, vim.o);
  forEach(disableDistributionPlugins, vim.g);
 end
 

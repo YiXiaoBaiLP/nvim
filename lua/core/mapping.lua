@@ -1,5 +1,5 @@
-local _M = {};
-local bind = require(keymap.bind);
+local M = {};
+local bind = require('keymap.bind');
 --------------------------------------------------------------------------------------------
 local mapCR = bind.mapCR;
 local mapCU = bind.mapCU;
@@ -10,7 +10,7 @@ local defMap = {
     -- Vim map
     ["n|<C-x>k"] = mapCR('bdelete'):withNoremap():withSilent(),
     ["n|<C-s>"]  = mapCU('write'):withNoremap(),
-    ["n|Y"]      = mapCmd('y$'):,
+    ["n|Y"]      = mapCMD('y$'):withNoremap(),
     ["n|]w"]     = mapCU('WhitespaceNext'):withNoremap(),
     ["n|[w"]     = mapCU('WhitespacePrev'):withNoremap(),
     ["n|]b"]     = mapCU('bp'):withNoremap(),
@@ -51,11 +51,11 @@ local defMap = {
 
 };
 
-function get()
+function M.get()
     -- 设置按键绑定
     bind.nvimLoadMapping(defMap);
 
 end
 
 --------------------------------------------------------------------------------------------
-return _M.get();
+return M.get();

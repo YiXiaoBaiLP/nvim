@@ -2,9 +2,9 @@
 
 local M = {};
 require('core.options');
-require('core.pack');
 require('core.cacheDir');
 require('core.mapping');
+local pack = require('core.pack');
 
 local leader_map = function()
   vim.g.mapleader = " ";
@@ -14,6 +14,9 @@ end
 
 function M.get()
   leader_map();
+  pack.ensurePlugins();
+  -- 调用包管理器
+  pack.loadCompile();
 end
 
 -------------------------------------------------------------------------------------------------

@@ -10,12 +10,12 @@ function rhsOptions:new()
             nowait = false,
         }
     };
-    setamtetable(instance, self)
+    setmetatable(instance, self)
     self.__index = self;
     return instance;
 end
 
-function rhsOptions:mapCmd(cmdString)
+function rhsOptions:mapCMD(cmdString)
     self.cmd = cmdString;
     return self;
 end
@@ -62,9 +62,9 @@ function pbind.mapCR(cmdString)
     return ro:mapCR(cmdString);
 end
 
-function pbind.mapCmd(cmdString)
+function pbind.mapCMD(cmdString)
     local ro = rhsOptions:new();
-    return ro:mapCmd(cmdString);
+    return ro:mapCMD(cmdString);
 end
 
 function pbind.mapCU(cmdString)
