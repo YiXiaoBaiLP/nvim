@@ -22,16 +22,13 @@ function _M:loadPacker()
 
     packer.init({
         compilePath = packerCompiled,
-        git = { 
-            cloneTimeout = 120,
-            defaut_url_format = 'https://hub.fastgit.org/%s'
-        },
-        disableCommands = true
+        git = { cloneTimeout = 120 },
+        disable_commands = true
     });
     packer.reset();
     local use = packer.use;
     self:loadPlugins();
-    use {"webhomason/packer.nvim", opt = true}
+    use {"wbthomason/packer.nvim", opt = true}
     for _, repo in ipairs(self.repos) do
         use(repo);
     end
@@ -43,7 +40,7 @@ function _M:loadPlugins()
     local getPluginsList = function()
         local list = {};
         -- 取得模块文件中所有plugins.lua配置文件
-        local tmp = vim.split(fn.globpath(modulesDir, '*/plugins.lua', '\n'));
+        local tmp = vim.split(fn.globpath(modulesDir, '*/plugins.lua'), '\n');
         for _,f in ipairs(tmp) do
             list[#list+1] = f:sub(#modulesDir - 6, -1);
         end
@@ -63,7 +60,7 @@ function _M:initEnsurePlugins()
     local packerDir = dataDir .. 'pack/packer/opt/packer.nvim';
     local state = uv.fs_stat(packerDir);
     if not state then
-        local cmd = "!git clone https://github.com/wbethomason/packer.nvim " .. packerDir;
+        local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packerDir;
         api.nvim_command(cmd);
         uv.fs_mkdir(dataDir .. 'lua', 511, function()
             assert("make compile path dir faield");
@@ -135,7 +132,7 @@ function plugins.autoCompile()
 end
 
 function plugins.loadCompile()
-    if fn.fileredable(compileToLua) == 1 then
+    if fn.filereadable(compileToLua) == 1 then
         require('_compiled');
     else
         assert('Missing packer compile file Run PackerCompile Or PackerInstall to fix');
