@@ -5,7 +5,9 @@
 local M = {};
 
 -- 调用临时文件保存目录
-local cacheDir = require("core.cacheDir");
+local cache = require("core.CacheDir");
+-- 获取缓存相关路径
+local cacheDir = cache.dirs().cacheDir;
 
 local defautOptions = {
   -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
@@ -28,11 +30,11 @@ local defautOptions = {
   -- 关闭缓冲区使用交换文件（关闭后不要在大文件，无法恢复）
   swapfile = false,
   -- 配置备份文件存放路径
-  directory = cacheDir.cacheDir .. "swag/",
-  undodir = cacheDir.cacheDir .. "undo/",
-  backupdir = cacheDir.cacheDir .. "backup/",
-  viewdir = cacheDir.cacheDir .. "view/",
-  spellfile = cacheDir.cacheDir .. "spell/en.utf-8.add",
+  directory = cacheDir .. "swag/",
+  undodir = cacheDir .. "undo/",
+  backupdir = cacheDir .. "backup/",
+  viewdir = cacheDir .. "view/",
+  spellfile = cacheDir .. "spell/en.utf-8.add",
   -- 使用系统剪贴版
   clipboard = "unnamedplus",
   -- 修复索引线
@@ -51,7 +53,7 @@ local defautOptions = {
   nrformats = "bin,hex",
   magic = true,
   -- 设置Vim的内部字符编码，作用于缓冲区、寄存器、表达式所用的字符串、viminfo保存的各种文本等
-  encoding = "utf-8",
+  encoding = "UTF-8",
   -- 记住前一次打开文件的状态
   viewoptions = "folds,cursor,curdir,slash,unix",
   -- 恢复前一次窗口状态
@@ -60,7 +62,7 @@ local defautOptions = {
   wildignorecase = true,
   -- 文件模式的列表，忽略这些文件
   wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
-  --shada = "!, '300,<50,@100,s10,h'",
+  shada = "!,'1000,<300,@120,s10,h",
   -- 跳过此目录的文件备份
   backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
   -- 缩进取整到 shiftwidth的倍数，用于 > 和 < 命令

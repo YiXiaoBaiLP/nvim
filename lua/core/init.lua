@@ -1,9 +1,14 @@
 -- 核心配置
 
 local M = {};
-require('core.options');
-require('core.cacheDir');
-require('core.mapping');
+require('core.Options');
+local cacheDir = require('core.CacheDir');
+require('core.Mapping');
+
+
+-- 创建缓存路径
+cacheDir.createDir();
+
 
 local leader_map = function()
   vim.g.mapleader = " ";
@@ -12,7 +17,7 @@ local leader_map = function()
 end
 
 function M.get()
-    local pack = require('core.pack');
+    local pack = require('core.Pack');
     leader_map();
     pack.ensurePlugins();
     -- 调用包管理器

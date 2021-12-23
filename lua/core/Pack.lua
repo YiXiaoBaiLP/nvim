@@ -1,6 +1,7 @@
 local fn, uv, api = vim.fn, vim.loop, vim.api;
-local vimPath = require('core.cacheDir').vimPath;
-local dataDir = require('core.cacheDir').dataDir;
+local cacheDir = require('core.CacheDir');
+local dataDir = cacheDir.dirs().dataDir;
+local vimPath = cacheDir.dirs().vimPath;
 -- 模块配置文件地址
 local modulesDir = vimPath .. '/lua/modules';
 local packerCompiled = dataDir .. 'packer_compiled.vim';
