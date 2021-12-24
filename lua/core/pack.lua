@@ -1,5 +1,5 @@
 local fn, uv, api = vim.fn, vim.loop, vim.api;
-local cacheDir = require('core.CacheDir');
+local cacheDir = require("core.CacheDir");
 local dataDir = cacheDir.dirs().dataDir;
 local vimPath = cacheDir.dirs().vimPath;
 -- 模块配置文件地址
@@ -23,8 +23,16 @@ function _M:loadPacker()
 
     packer.init({
         compilePath = packerCompiled,
-        git = { clone_timeout = 120 },
-        disable_commands = true
+        git = { 
+            clone_timeout = 120,
+            default_url_format = "https://hub.fastgit.org/%s"
+        },
+        disable_commands = true,
+        display = {
+            open_fn = function()
+                return require("packer.util").float({border = "single"});
+            end
+        }
     });
     packer.reset();
     local use = packer.use;
@@ -133,18 +141,19 @@ function plugins.autoCompile()
 end
 
 function plugins.loadCompile()
+    local cmd = vim.cmd;
     if fn.filereadable(compileToLua) == 1 then
         require('_compiled');
     else
         assert('Missing packer compile file Run PackerCompile Or PackerInstall to fix');
     end
-    vim.cmd [[command! PackerCompile lua require('pack').magicCompile()]]
-    vim.cmd [[command! PackerInstall lua require('pack').install()]]
-    vim.cmd [[command! PackerUpdate lua require('pack').update()]]
-    vim.cmd [[command! PackerSync lua require('pack').sync()]]
-    vim.cmd [[command! PackerClean lua require('pack').clean()]]
-    vim.cmd [[autocmd! User PackerCompile lua require('pack').magicCompile()]]
-    vim.cmd [[command! PackerStatus lua require('pack').status()]]
+    cmd [[command! PackerCompile lua require('core.pack').magicCompile()]]
+    cmd [[command! PackerInstall lua require('core.pack').install()]]
+    cmd [[command! PackerUpdate lua require('core.pack').update()]]
+    cmd [[command! PackerSync lua require('core.pack').sync()]]
+    cmd [[command! PackerClean lua require('core.pack').clean()]]
+    cmd [[autocmd! User PackerCompile lua require('core.pack').magicCompile()]]
+    cmd [[command! PackerStatus lua require('core.pack').status()]]
 end
 
 return plugins;
