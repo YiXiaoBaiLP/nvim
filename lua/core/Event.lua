@@ -5,7 +5,7 @@ local api = vim.api;
 ----------------------------------------------------------------------------------------------------
 
 function autoCmd.nvimCreateAugroups(definitions)
-    for groupName, definition in pairs(definitions)do
+    for groupName, definition in pairs(definitions) do
         api.nvim_command('augroup ' .. groupName);
         api.nvim_command('autocmd!');
         for _, def in ipairs(definition) do
@@ -19,11 +19,11 @@ end
 function autoCmd.loadAutoCmds()
     local definitions = {
         packer = {
-            {"BufWritePost", "*.lua", "lua require('core.pack').auto_compile()"};
+            {"BufWritePost", "*.lua", "lua require('core.Pack').autoCompile()"};
         },
         bufs = {
             -- Reload vim config automatically
-            {"BufWritePost", [[$VIM_PATH/{*.vim, *.yaml, vimrc} nested source $MYVIMRC | redraw]]};
+            {"BufWritePost", [[$VIM_PATH/{*.vim, *.yaml, vimrc} nested source $MYVIMRC | redraw]]},
             -- Reload Vim script automatically if setlocal autoread
             {"BufWritePost, FileWritePost", "*.vim", [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]};
             {"BufWritePre","/tmp/*","setlocal noundofile"};
@@ -32,9 +32,9 @@ function autoCmd.loadAutoCmds()
             {"BufWritePre","*.tmp","setlocal noundofile"};
             {"BufWritePre","*.bak","setlocal noundofile"};
             {"BufWritePre","*.tsx","lua vim.api.nvim_command('Format')"};
-            {"BufWritePre","*.go","lua require('internal.golines').golines_format()"};
-        };
-        
+            [=[{"BufWritePre","*.go","lua require('internal.golines').golines_format()"};]=]
+        },
+
         -- 窗口相关
         wins = {
             -- Highlight current line only on focused window
@@ -57,7 +57,6 @@ function autoCmd.loadAutoCmds()
             {"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]};
         };
     }
-
     autoCmd.nvimCreateAugroups(definitions);
 end
 

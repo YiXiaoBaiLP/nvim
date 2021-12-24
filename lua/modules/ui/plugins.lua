@@ -1,41 +1,71 @@
 local ui = {};
-local conf - require('modules.ui.config');
+local conf = require('modules.ui.config');
 
-ui['glepnir/zephyr-nvim'] = {
-    config = [[vim.cmd('colorscheme zyphyr')]]
+-- 为每个图标提供了相同的图标和颜色
+ui["kyazdani42/nvim-web-devicons"] = {
+    opt = false
 };
-
-ui['glepnir/dashboard-nvim'] = {
-    config = conf.dashboard;
+-- edge 主题配色方案
+ui["sainnhe/edge"] = {
+    opt = false,
+    config =conf.edge
 };
-
-ui['glepnir/galaxyline.nvim'] = {
-    branch = 'main',
-    config = conf.galaxyline,
-    requires = 'kyazdani42/nvim-web-devicons'
+-- 温暖的中色调的黑暗主题
+ui["catppuccin/nvim"] = {
+    opt = false,
+    as = "catppuccin",
+    config = conf.catppuccin
 };
+-- nvim的状态栏
+ui["nvim-lualine/lualine.nvim"] = {
+    opt = true,
+    after = "lualine-lsp-progress",
+    config = conf.lualine
 
-ui['lukas-reineke/indent-blankline.nvim'] = {
-    event = 'BufRead',
-    branch = 'lua',
-    config = conf.indent_blakline
 };
-
-ui['akinsho/nvim-bufferline.lua'] = {
-    config = conf.nvim_bufferline,
-    requires = 'kyazdani42/nvim-web-devicons'
+-- 将lsp的进度添加到nvim的状态栏上
+ui["arkav/lualine-lsp-progress"] = {
+    opt = true,
+    after = "nvim-gps"
 };
-
-ui['kyazdani42/nvim-tree.lua'] = {
-    cmd = {'NvimTreeToggle', 'NvimTreeOpen'},
-    config = conf.nvim_tree,
-    requires = 'kyazdani42/nvim-web-devicons'
+-- 启动界面
+ui["glepnir/dashboard-nvim"] = {
+    opt = true,
+    event = "BufWinEnter"
 };
-
-ui['lweis6991/gitsigns.nvim'] = {
-    event = {'BufRead', 'BufNewFile'},
+-- lua编写的文件管理器
+ui["kyazdani42/nvim-tree.lua"] = {
+    opt = true,
+    cmd = {"NvimTreeToggle", "NvimTreeOpen"},
+    config = conf.nvim_tree
+};
+-- Git装饰插件
+ui["lewis6991/gitsigns.nvim"] = {
+    opt = true,
+    event = {"BufRead", "BufNewFile"},
     config = conf.gitsigns,
-    requires = {'nvim-lua/plenary.nvim', opt = true}
+    requires = {
+        "nvim-lua/plenary.nvim",
+        opt = true
+    }
+
+};
+-- 缩进
+ui["lukas-reineke/indent-blankline.nvim"] = {
+    opt = true,
+    event = "BufRead",
+    config = conf.indent_blankline
+};
+-- 缓冲线插件
+ui["akinsho/bufferline.nvim"] = {
+    opt = true,
+    event = "BufRead",
+    config = conf.nvim_bufferline
+};
+-- 显示一个滚动条
+ui["dstein64/nvim-scrollview"] = {
+    opt = true,
+    event = "BufRead"
 };
 
 return ui;

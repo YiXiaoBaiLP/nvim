@@ -4,6 +4,7 @@ local M = {};
 require('core.Options');
 local cacheDir = require('core.CacheDir');
 require('core.Mapping');
+--require('core.Event');
 
 
 -- 创建缓存路径
@@ -17,7 +18,7 @@ local leader_map = function()
 end
 
 function M.get()
-    local pack = require('core.Pack');
+    local pack = require('core.pack');
     leader_map();
     pack.ensurePlugins();
     -- 调用包管理器
