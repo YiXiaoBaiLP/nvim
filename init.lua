@@ -40,4 +40,5 @@ pack.loadCompile();
 
 event.loadAutoCmds();
 
+-- 使用主题
 cmd [[colorscheme catppuccin]]
