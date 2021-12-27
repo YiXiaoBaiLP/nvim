@@ -1,17 +1,5 @@
 local M = {};
 
--- 配置edge主题
-function M.edge()
-    local cmd, g = vim.cmd, vim.g;
-    cmd [[set background = dark]];
-    g.edge_style = "aura";
-    g.edge_enable_italic  = 1;
-    g.edge_disable_italic_comment = 1;
-    g.edge_show_eob = 1;
-    g.edge_better_performance = 1;
-    g.edge_transparent_background = 1;
-end
-
 function M.catppuccin()
     require('catppuccin').setup({
         transparent_background = false,

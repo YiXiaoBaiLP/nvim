@@ -201,12 +201,6 @@ _G.packer_plugins = {
     path = "/home/yixiaobai/.local/share/nvim/site/pack/packer/opt/dashboard-nvim",
     url = "https://github.com.cnpmjs.org/glepnir/dashboard-nvim"
   },
-  edge = {
-    config = { "\27LJ\1\2ø\1\0\0\4\0\v\0\0204\0\0\0007\0\1\0004\1\0\0007\1\2\1\16\2\0\0%\3\3\0>\2\2\1%\2\5\0:\2\4\1'\2\1\0:\2\6\1'\2\1\0:\2\a\1'\2\1\0:\2\b\1'\2\1\0:\2\t\1'\2\1\0:\2\n\1G\0\1\0 edge_transparent_background\28edge_better_performance\18edge_show_eob edge_disable_italic_comment\23edge_enable_italic\taura\15edge_style\26set background = dark\6g\bcmd\bvim\0" },
-    loaded = true,
-    path = "/home/yixiaobai/.local/share/nvim/site/pack/packer/start/edge",
-    url = "https://github.com.cnpmjs.org/sainnhe/edge"
-  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/yixiaobai/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -403,10 +397,6 @@ time([[Config for catppuccin]], false)
 time([[Config for nvim-comment]], true)
 try_loadstring("\27LJ\1\2^\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\25update_commentstring&ts_context_commentstring.internal\frequire\20\1\0\1\0\1\0\0031\0\0\0000\0\0€H\0\2\0\0\0", "config", "nvim-comment")
 time([[Config for nvim-comment]], false)
--- Config for: edge
-time([[Config for edge]], true)
-try_loadstring("\27LJ\1\2ø\1\0\0\4\0\v\0\0204\0\0\0007\0\1\0004\1\0\0007\1\2\1\16\2\0\0%\3\3\0>\2\2\1%\2\5\0:\2\4\1'\2\1\0:\2\6\1'\2\1\0:\2\a\1'\2\1\0:\2\b\1'\2\1\0:\2\t\1'\2\1\0:\2\n\1G\0\1\0 edge_transparent_background\28edge_better_performance\18edge_show_eob edge_disable_italic_comment\23edge_enable_italic\taura\15edge_style\26set background = dark\6g\bcmd\bvim\0", "config", "edge")
-time([[Config for edge]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

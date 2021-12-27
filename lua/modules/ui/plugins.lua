@@ -5,11 +5,6 @@ local conf = require('modules.ui.config');
 ui["kyazdani42/nvim-web-devicons"] = {
     opt = false
 };
--- edge 主题配色方案
-ui["sainnhe/edge"] = {
-    opt = false,
-    config = conf.edge
-};
 -- 温暖的中色调的黑暗主题
 ui["catppuccin/nvim"] = {
     opt = false,
