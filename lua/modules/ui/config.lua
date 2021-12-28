@@ -1,5 +1,6 @@
 local M = {};
 
+-- 主题配置
 function M.catppuccin()
     require('catppuccin').setup({
         transparent_background = false,
@@ -75,28 +76,45 @@ function M.lualine()
 
     require("lualine").setup {
         options = {
+            -- 启用图标
             icons_enabled = true,
             -- 设置主题
             theme = "catppuccin",
             disabled_filetypes = {},
+            -- 组件分割符
             component_separators = "|",
-            section_separators = {left = "", right = ""}
+            section_separators = {
+                left = "",
+                right = ""
+            }
         },
         sections = {
             lualine_a = {"mode"},
-            lualine_b = {{"branch"}, {"diff"}},
+            lualine_b = {
+                {"branch"},
+                {"diff"},
+            },
             lualine_c = {
-                {"lsp_progress"}, {gps_content, cond = gps.is_available}
+                {"lsp_progress"},
+                {gps_content, cond = gps.is_available}
             },
             lualine_x = {
                 {
                     "diagnostics",
                     sources = {'nvim_diagnostic'},
-                    symbols = {error = " ", warn = " ", info = " "}
+                    symbols = {
+                        error = " ",
+                        warn = " ",
+                        info = " "
+                    }
                 }
             },
             lualine_y = {"filetype", "encoding", "fileformat"},
-            lualine_z = {"progress", "location"}
+            lualine_z = {
+                "progress",
+                "location",
+                "os.date('%m月%d日')"
+            }
         },
         inactive_sections = {
             lualine_a = {},
@@ -108,13 +126,18 @@ function M.lualine()
         },
         tabline = {},
         extensions = {
-            "quickfix", "nvim-tree", "toggleterm", "fugitive", symbols_outline
+            "quickfix",
+            "nvim-tree",
+            "toggleterm",
+            "fugitive",
+            symbols_outline
         }
     }
 end
 
+-- 文件树配置
 function M.nvim_tree()
-    local tree_cb = require"nvim-tree.config".nvim_tree_callback
+    local tree_cb = require"nvim-tree.config".nvim_tree_callback;
     require("nvim-tree").setup {
         git = {enable = true, ignore = false, timeout = 500},
         ignore = {".git", "node_modules", ".cache"},
@@ -209,6 +232,7 @@ function M.nvim_bufferline()
     }
 end
 
+-- Git相关配置
 function M.gitsigns()
     require("gitsigns").setup {
         signs = {
