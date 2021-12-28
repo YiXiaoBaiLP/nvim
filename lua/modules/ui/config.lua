@@ -50,8 +50,9 @@ function M.catppuccin()
     })
 end
 
+-- nvim的状态栏配置
 function M.lualine()
-    local gps = require("nvim-gps")
+    local gps = require("nvim-gps");
 
     local function gps_content()
         if gps.is_available() then
@@ -75,6 +76,7 @@ function M.lualine()
     require("lualine").setup {
         options = {
             icons_enabled = true,
+            -- 设置主题
             theme = "catppuccin",
             disabled_filetypes = {},
             component_separators = "|",
@@ -140,7 +142,8 @@ function M.nvim_tree()
                     {
                         key = {"<CR>", "o", "<2-LeftMouse>"},
                         cb = tree_cb("tabnew")
-                    }, {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
+                    }, 
+                    {key = {"<2-RightMouse>", "<C-]>"}, cb = tree_cb("cd")},
                     {key = "<C-v>", cb = tree_cb("vsplit")},
                     {key = "<C-x>", cb = tree_cb("split")},
                     {key = "<C-t>", cb = tree_cb("tabnew")},
