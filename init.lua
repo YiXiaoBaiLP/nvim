@@ -8,7 +8,7 @@
 --]=]
 
 -- nvim路径相关
---require("core.CacheDir");
+local cache = require("core.CacheDir");
 -- 设置nvim
 require("core.Options");
 -- Pack包管理器
@@ -31,6 +31,9 @@ local o, wo, bo = vim.o, vim.wo, vim.bo;
 
 -- 获取home路径
 local home_dir = loop.os_homedir();
+
+-- 创建缓存文件夹
+cache.createDirs();
 
 pack.ensurePlugins();
 pack.loadCompile();
