@@ -8,7 +8,7 @@
 --]=]
 
 -- nvim路径相关
-require("core.CacheDir");
+--require("core.CacheDir");
 -- 设置nvim
 require("core.Options");
 -- Pack包管理器
