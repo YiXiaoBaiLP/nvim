@@ -16,10 +16,10 @@ local pathSep = "";
 local home = "";
 if tostring(osName) == "Windows_NT" then
     pathSep = "\\";
-    hoem = os.getenv("USERPROFILE");
+    home = os.getenv("USERPROFILE");
 else
     pathSep = "/";
-    hemo = os.getenv("HOME");
+    home = os.getenv("HOME");
 end
 
 -- nvim-data的文件夹
@@ -60,4 +60,5 @@ function M.dirs()
     return dirs;
 end
 
+---------------------------------------------------------------------------------------
 return M;
