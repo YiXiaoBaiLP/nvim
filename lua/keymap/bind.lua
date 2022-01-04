@@ -26,7 +26,7 @@ function rhsOptions:mapCR(cmdString)
 end
 
 function rhsOptions:mapArgs(cmdString)
-    self.cmd = ("%s<Space>"):format(cmdString);
+    self.cmd = (":%s<Space>"):format(cmdString);
     return self;
 end
 

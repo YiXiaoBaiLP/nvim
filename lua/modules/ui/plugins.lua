@@ -5,11 +5,18 @@ local conf = require('modules.ui.config');
 ui["kyazdani42/nvim-web-devicons"] = {
     opt = false
 };
+--[=[
 -- 温暖的中色调的黑暗主题
 ui["catppuccin/nvim"] = {
     opt = false,
     as = "catppuccin",
     config = conf.catppuccin
+};
+--]=]
+-- Tokyo Night 主题
+ui["folke/tokyonight.nvim"] = {
+    opt = false,
+    config = conf.tokyonight
 };
 -- nvim的状态栏
 ui["nvim-lualine/lualine.nvim"] = {

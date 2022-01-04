@@ -1,6 +1,6 @@
 local M = {};
 local api = vim.api;
-----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
 
 function M.nvimCreateAugroups(definitions)
     for groupName, definition in pairs(definitions) do
@@ -15,9 +15,14 @@ function M.nvimCreateAugroups(definitions)
 end
 
 function M.loadAutoCmds()
+    --[=[
+            BufWritePost：把整个缓冲区写回文件后
+            BufWritePre或BufWrite：把整个缓冲区写回文件前
+            BufWriteCmd：把整个缓冲区写回到文件前。应执行把文件写回的操作并在成功后复位 'modified' 标志，   除非 'cpo'里包含了 '+' 并且写到另一个文件里 |cpo-+|。它不应改动缓冲区的内容。
+    --]=]
     local definitions = {
         packer = {
-            {"BufWritePost", "*.lua", "lua require('core.Pack').autoCompile()"},
+           -- {"BufWritePost", "*.lua", "lua require('core.Pack').autoCompile()"},
         },
         bufs = {
             -- Reload vim config automatically
@@ -47,7 +52,7 @@ function M.loadAutoCmds()
             -- Check if file changed when its window is focus, more eager than 'autoread'
             {"FocusGained", "* checktime"},
         };
-
+        -- 文件相关
         ft = {
             {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"},
             {"BufNewFile,BufRead", "*.toml", " setf toml"},
@@ -60,5 +65,5 @@ function M.loadAutoCmds()
     M.nvimCreateAugroups(definitions);
 end
 
-----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
 return M;

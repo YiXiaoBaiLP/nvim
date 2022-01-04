@@ -197,7 +197,7 @@ local disableDistributionPlugins = {
 -- 循环
 -- funName 函数名称
 -- param 参数名称
-function forEach(funName, param)
+local function forEach(funName, param)
   for k, v in pairs(funName) do
     param[k] = v
   end

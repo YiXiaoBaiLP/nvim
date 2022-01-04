@@ -50,6 +50,38 @@ function M.catppuccin()
         }
     })
 end
+-- 东京夜主题配置
+function M.tokyonight()
+    local g = vim.g;
+    -- Example config in Lua
+    g.tokyonight_style = "day";
+    -- 注释斜体
+    g.tokyonight_italic_comments = false;
+    -- 关键字斜体
+    g.tokyonight_italic_keywords = true;
+    -- 函数斜体
+    g.tokyonight_italic_functions = true;
+    g.tokyonight_italic_functions = true;
+    -- 变量与标识符斜体
+    g.tokyonight_italic_variables = false;
+    -- 禁用背景颜色
+    g.tokyonight_transparent = false;
+    g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" };
+    -- 侧边栏获得透明背景
+    g.tokyonight_transparent_sidebar = true;
+    -- 侧边栏背景变暗
+    g.tokyonight_dark_sidebar = true;
+    -- 悬浮窗口背景变暗
+    g.tokyonight_dark_float = true;
+    -- 主题模式“Day”时的亮度
+    g.tokyonight_day_brightness = 0.2
+    -- 透明模式下，标题为粗体
+    g.tokyonight_lualine_bold = true;
+    -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+    g.tokyonight_colors = { hint = "orange", error = "#ff0000" };
+    -- Load the colorscheme
+    vim.cmd[[colorscheme tokyonight]]
+end
 
 -- nvim的状态栏配置
 function M.lualine()
@@ -79,7 +111,7 @@ function M.lualine()
             -- 启用图标
             icons_enabled = true,
             -- 设置主题
-            theme = "catppuccin",
+            theme = "tokyonight",
             disabled_filetypes = {},
             -- 组件分割符
             component_separators = "|",
@@ -112,8 +144,7 @@ function M.lualine()
             lualine_y = {"filetype", "encoding", "fileformat"},
             lualine_z = {
                 "progress",
-                "location",
-                "os.date('%m月%d日')"
+                "location"
             }
         },
         inactive_sections = {
