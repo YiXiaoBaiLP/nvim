@@ -23,9 +23,10 @@ function _M:loadPacker()
 
     packer.init({
         compilePath = packerCompiled,
-        git = { clone_timeout = 120,
-        default_url_format = "https://github.com.cnpmjs.org/%s"
-    },
+        git = { 
+            clone_timeout = 120,
+            default_url_format = "https://github.com.cnpmjs.org/%s"
+        },
         disable_commands = true,
         display = {
             open_fn = function()

@@ -1,7 +1,8 @@
 " Set Editor Font
 if exists(':GuiFont')
     " Use GuiFont! to ignore font errors
-    GuiFont! Fira Code:h12
+    "GuiFont! Fira Code:h12:cASCI
+    GuiFont! MesloLGS NF:h12:cASCI
 endif
 
 "图形自适应颜色
@@ -11,7 +12,7 @@ endif
 
 " 图形自适应字体
 if exists(':GuiAdaptiveFont')
-    GuiAdaptiveFont! 1
+    GuiAdaptiveFont 1
 endif
 
 " 图形自适应样式
@@ -34,10 +35,8 @@ if exists(':GuiRenderLigatures')
     GuiRenderLigatures 1
 endif
 
-if exists(':GuiWindowMaximized')
-    " 最大化打开nvim-qt
-    GuiWindowMaximized 1
-endif
+" 最大化打开nvim-qt
+call GuiWindowMaximized(1)
 
 " Right Click Context Menu (Copy-Cut-Paste)
 nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
