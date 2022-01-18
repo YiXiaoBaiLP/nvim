@@ -16,11 +16,13 @@ _M.__index = _M;
 -- 加载包管理器（packer.nvim）
 --]]
 function _M:loadPacker()
+    -- 判断packer命令是否存在
     if not packer then
         api.nvim_command("packadd packer.nvim");
         packer = require("packer");
     end
 
+    -- packer初始化
     packer.init({
         compilePath = packerCompiled,
         git = { 
@@ -36,6 +38,7 @@ function _M:loadPacker()
     });
     packer.reset();
     local use = packer.use;
+    -- 加载本地插件配置
     self:loadPlugins();
     use {"wbthomason/packer.nvim", opt = true}
     for _, repo in ipairs(self.repos) do
@@ -43,12 +46,13 @@ function _M:loadPacker()
     end
 end
 
+-- 加载插件配置
 function _M:loadPlugins()
     self.repos = {};
 
     local getPluginsList = function()
         local list = {};
-        -- 取得模块文件中所有plugins.lua配置文件
+        -- 取得模块文件中所有plugins.lua配置文件,路径拼接
         local tmp = vim.split(fn.globpath(modulesDir, "*/plugins.lua"), "\n");
         for _,f in ipairs(tmp) do
             list[#list+1] = f:sub(#modulesDir - 6, -1);
