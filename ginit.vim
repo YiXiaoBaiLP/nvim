@@ -1,8 +1,7 @@
 " Set Editor Font
 if exists(':GuiFont')
     " Use GuiFont! to ignore font errors
-    "GuiFont! Fira Code:h12:cASCI
-    GuiFont! MesloLGS NF:h12:cASCI
+    GuiFont! FiraCode Nerd Font:h12:cASCI
 endif
 
 "图形自适应颜色
