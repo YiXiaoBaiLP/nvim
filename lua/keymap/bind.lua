@@ -72,7 +72,7 @@ function pbind.mapCU(cmdString)
     return ro:mapCU(cmdString);
 end
 
-function pbind.mapArgs()
+function pbind.mapArgs(cmdString)
     local ro = rhsOptions:new();
     return ro:mapArgs(cmdString);
 end
