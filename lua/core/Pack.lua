@@ -24,11 +24,18 @@ function _M:loadPacker()
 
     -- packer初始化
     packer.init({
-        compilePath = packerCompiled,
-        git = { 
+        -- 编译后的文件路径
+        compile_path = packerCompiled,
+        -- 同时处理的数量
+        max_jobs = 12,
+        git = {
+            -- git clone depth
+            depth = 1,
+            -- git clone 超时时间（秒）
             clone_timeout = 120,
             default_url_format = "https://github.com.cnpmjs.org/%s"
         },
+        -- 不禁用创建
         disable_commands = true,
         display = {
             open_fn = function()
@@ -54,31 +61,43 @@ function _M:loadPlugins()
         local list = {};
         -- 取得模块文件中所有plugins.lua配置文件,路径拼接
         local tmp = vim.split(fn.globpath(modulesDir, "*/plugins.lua"), "\n");
-        for _,f in ipairs(tmp) do
-            list[#list+1] = f:sub(#modulesDir - 6, -1);
+        for _,f in ipairs(tmp) do         
+            list[#list+1] = f:sub(#modulesDir - 6, - 1);
         end
         return list;
     end
-
+    -- 所有的plugins文件路径
     local pluginsFile = getPluginsList();
     for _,m in ipairs(pluginsFile) do
+        -- 获取plugins的相对路径
+        -- 例如：require(modules/ui/plugins)
         local repos = require(m:sub(0, #m - 4));
         for repo, conf in pairs(repos) do
+            -- 合并两个表
+            -- key：repo
+            -- value:conf
+            -- 将所有的plugins.lua文件的内容整合一个
             self.repos[#self.repos + 1] = vim.tbl_extend("force", {repo}, conf);
         end
     end
 end
 
+-- 初始化Packer包管理工具
 function _M:initEnsurePlugins()
+    -- 设置Packer目录
     local packerDir = dataDir .. "pack/packer/opt/packer.nvim";
+    -- 判断Packer目录是否存在
     local state = uv.fs_stat(packerDir);
     if not state then
         local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packerDir;
         api.nvim_command(cmd);
+        -- TODO：在nvim-data/site/路径下创建了一个lua文件夹，目前不知道干啥用的
         uv.fs_mkdir(dataDir .. "lua", 511, function()
             assert("make compile path dir faield");
         end)
+        -- 加载Packer包管理器
         self:loadPacker();
+        -- packer包方法
         packer.install();
     end
 end
@@ -91,7 +110,7 @@ local plugins = setmetatable({}, {
         return packer[key];
     end
 });
-
+-- 初始化Packer包管理工具
 function plugins.ensurePlugins()
     _M:initEnsurePlugins();
 end
@@ -156,7 +175,7 @@ function plugins.loadCompile()
     cmd [[command! PackerUpdate lua require("core.Pack").update()]]
     cmd [[command! PackerSync lua require("core.Pack").sync()]]
     cmd [[command! PackerClean lua require("core.Pack").clean()]]
-    cmd [[autocmd! User PackerCompile lua require("core.Pack").magicCompile()]]
+    cmd [[autocmd User PackerCompile lua require("core.Pack").magicCompile()]]
     cmd [[command! PackerStatus lua require("core.Pack").status()]]
 end
 
