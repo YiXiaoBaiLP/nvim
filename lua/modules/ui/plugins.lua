@@ -18,6 +18,7 @@ ui["folke/tokyonight.nvim"] = {
     opt = false,
     config = conf.tokyonight
 };
+
 -- nvim的状态栏
 ui["nvim-lualine/lualine.nvim"] = {
     opt = true,
@@ -31,10 +32,17 @@ ui["arkav/lualine-lsp-progress"] = {
     after = "nvim-gps"
 };
 -- 启动界面
+--[=[
 ui["glepnir/dashboard-nvim"] = {
     opt = true,
     event = "BufWinEnter"
 };
+--]=]
+ui["goolord/alpha-nvim"] = {
+    opt = false,
+    config = conf.alphaConf
+
+}
 -- lua编写的文件管理器
 ui["kyazdani42/nvim-tree.lua"] = {
     opt = true,
