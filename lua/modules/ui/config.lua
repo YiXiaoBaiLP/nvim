@@ -81,7 +81,49 @@ function M.tokyonight()
     -- Change the "hint" color to the "orange" color, and make the "error" color bright red
     g.tokyonight_colors = { hint = "orange", error = "#ff0000" };
     -- Load the colorscheme
-    vim.cmd[[colorscheme tokyonight]]
+    --vim.cmd[[colorscheme tokyonight]]
+end
+
+-- OneDarkPro主题配置
+function M.oneDarkConf()
+    local onedarkpro = require("onedarkpro")
+    onedarkpro.setup({
+    -- Theme can be overwritten with 'onedark' or 'onelight' as a string!
+    theme = function()
+        if vim.o.background == "light" then
+            return "onedark"
+        else
+            return "onelight"
+        end
+    end,
+    colors = {}, -- Override default colors. Can specify colors for "onelight" or "onedark" themes by passing in a table
+    hlgroups = {}, -- Override default highlight groups
+    plugins = { -- Override which plugins highlight groups are loaded
+        native_lsp = true,
+        polygot = true,
+        treesitter = true,
+        -- Others omitted for brevity
+    },
+    styles = {
+        comments = "NONE",
+        functions = "bold",
+        keywords = "bold,italic",
+        strings = "NONE",
+        variables = "bold"
+    },
+    options = {
+        bold = true, -- Use the themes opinionated bold styles?
+        italic = true, -- Use the themes opinionated italic styles?
+        underline = true, -- Use the themes opinionated underline styles?
+        undercurl = true, -- Use the themes opinionated undercurl styles?
+        cursorline = false, -- Use cursorline highlighting?
+        transparency = false, -- Use a transparent background?
+        terminal_colors = false, -- Use the theme's colors for Neovim's :terminal?
+        window_unfocussed_color = true, -- When the window is out of focus, change the normal background?
+    }
+    })
+    -- Load the colorscheme
+    onedarkpro.load()
 end
 
 -- nvim启动界面配置
@@ -195,7 +237,7 @@ function M.lualine()
             -- 启用图标
             icons_enabled = true,
             -- 设置主题
-            theme = "tokyonight",
+            theme = "onedarkpro",
             disabled_filetypes = {},
             -- 组件分割符
             component_separators = "|",

@@ -19,6 +19,12 @@ ui["folke/tokyonight.nvim"] = {
     config = conf.tokyonight
 };
 
+-- OneDarkPro 主题
+ui["olimorris/onedarkpro.nvim"] = {
+    opt = false,
+    config = conf.oneDarkConf
+
+};
 -- nvim的状态栏
 ui["nvim-lualine/lualine.nvim"] = {
     opt = true,
