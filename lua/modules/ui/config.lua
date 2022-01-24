@@ -89,13 +89,7 @@ function M.oneDarkConf()
     local onedarkpro = require("onedarkpro")
     onedarkpro.setup({
     -- Theme can be overwritten with 'onedark' or 'onelight' as a string!
-    theme = function()
-        if vim.o.background == "light" then
-            return "onedark"
-        else
-            return "onelight"
-        end
-    end,
+    theme = "onelight",
     colors = {}, -- Override default colors. Can specify colors for "onelight" or "onedark" themes by passing in a table
     hlgroups = {}, -- Override default highlight groups
     plugins = { -- Override which plugins highlight groups are loaded
@@ -135,6 +129,7 @@ function M.alphaConf()
 
         local function pick_color()
             local colors = {"String", "Identifier", "Keyword", "Number"}
+            print(math.random(#colors))
             return colors[math.random(#colors)]
         end
 
