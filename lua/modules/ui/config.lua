@@ -100,10 +100,10 @@ function M.oneDarkConf()
     },
     styles = {
         comments = "NONE",
-        functions = "bold",
+        functions = "NONE",
         keywords = "bold,italic",
         strings = "NONE",
-        variables = "bold"
+        variables = "NONE"
     },
     options = {
         bold = true, -- Use the themes opinionated bold styles?
