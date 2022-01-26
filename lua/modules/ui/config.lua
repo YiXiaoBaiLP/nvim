@@ -1,89 +1,5 @@
 local M = {};
 
--- 主题配置
-function M.catppuccin()
-    require('catppuccin').setup({
-        transparent_background = false,
-        term_colors = true,
-        styles = {
-            comments = "italic",
-            functions = "italic,bold",
-            keywords = "italic",
-            strings = "NONE",
-            variables = "NONE"
-        },
-        integrations = {
-            treesitter = true,
-            native_lsp = {
-                enabled = true,
-                virtual_text = {
-                    errors = "italic",
-                    hints = "italic",
-                    warnings = "italic",
-                    information = "italic"
-                },
-                underlines = {
-                    errors = "underline",
-                    hints = "underline",
-                    warnings = "underline",
-                    information = "underline"
-                }
-            },
-            lsp_trouble = true,
-            lsp_saga = true,
-            gitgutter = false,
-            gitsigns = true,
-            telescope = true,
-            nvimtree = {enabled = true, show_root = true},
-            which_key = true,
-            indent_blankline = {enabled = true, colored_indent_levels = false},
-            dashboard = true,
-            neogit = false,
-            vim_sneak = false,
-            fern = false,
-            barbar = false,
-            bufferline = true,
-            markdown = true,
-            lightspeed = false,
-            ts_rainbow = true,
-            hop = true
-        }
-    })
-end
-
--- 东京夜主题配置
-function M.tokyonight()
-    local g = vim.g;
-    -- Example config in Lua
-   g.tokyonight_style = "day";
-    -- 注释斜体
-    g.tokyonight_italic_comments = false;
-    -- 关键字斜体
-    g.tokyonight_italic_keywords = true;
-    -- 函数斜体
-    g.tokyonight_italic_functions = true;
-    g.tokyonight_italic_functions = true;
-    -- 变量与标识符斜体
-    g.tokyonight_italic_variables = false;
-    -- 禁用背景颜色
-    g.tokyonight_transparent = false;
-    g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" };
-    -- 侧边栏获得透明背景
-    g.tokyonight_transparent_sidebar = true;
-    -- 侧边栏背景变暗
-    g.tokyonight_dark_sidebar = true;
-    -- 悬浮窗口背景变暗
-    g.tokyonight_dark_float = true;
-    -- 主题模式“Day”时的亮度
-   g.tokyonight_day_brightness = 0.1;
-    -- 透明模式下，标题为粗体
-    g.tokyonight_lualine_bold = true;
-    -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-    g.tokyonight_colors = { hint = "orange", error = "#ff0000" };
-    -- Load the colorscheme
-    --vim.cmd[[colorscheme tokyonight]]
-end
-
 -- OneDarkPro主题配置
 function M.oneDarkConf()
     local onedarkpro = require("onedarkpro");
@@ -126,86 +42,47 @@ end
 
 -- nvim启动界面配置
 function M.alphaConf()
-        local alpha = require("alpha")
-        local dashboard = require("alpha.themes.dashboard")
-
-        math.randomseed(os.time())
-
-        local function pick_color()
-            local colors = {"String", "Identifier", "Keyword", "Number"}
-            print(math.random(#colors))
-            return colors[math.random(#colors)]
-        end
+        local alpha = require("alpha");
+        local dashboard = require("alpha.themes.dashboard");
+        local logo = {
+            [[                                                                                  ]],
+            [[                                                                                  ]],
+            [[ __   __    _    __  __     _                      ___              _             ]],
+            [[ \ \ / /   (_)   \ \/ /    (_)    __ _     ___    | _ )   __ _     (_)      o O O ]],
+            [[  \ V /    | |    >  <     | |   / _` |   / _ \   | _ \  / _` |    | |     o      ]],
+            [[  _|_|_   _|_|_  /_/\_\   _|_|_  \__,_|   \___/   |___/  \__,_|   _|_|_   TS__[O] ]],
+            [[_| """ |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======| ]],
+            [["`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000' ]],
+            [[                                                                                  ]],
+            [[                                                                                  ]],
+            };
+            
+        -- 开始界面的字符画
+        dashboard.section.header.val = logo;
+        -- 字符画下面的选项
+        dashboard.section.buttons.val = {
+            dashboard.button( "e", "  > New file" , ":ene <BAR> startinsert <CR>"),
+            dashboard.button( "f", "  > Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
+            dashboard.button( "r", "  > Recent"   , ":Telescope oldfiles<CR>"),
+            dashboard.button( "s", "  > Settings" , ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd<CR>"),
+            dashboard.button( "q", "  > Quit NVIM", ":qa<CR>"),
+        }
 
         local function footer()
             local total_plugins = #vim.tbl_keys(packer_plugins)
-            local datetime = os.date(" %Y-%m-%d   %H:%M")
             local version = vim.version()
             local nvim_version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
 
-            return datetime .. "   " .. total_plugins .. " plugins" .. nvim_version_info
+            return "   " .. total_plugins .. " plugins" .. nvim_version_info
         end
 
-        --[=[
-        local logo = {
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀",
-                "⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆🔴⠀⠀⠀⠀🔴⠀⠀⣿⣷⠀",
-                "⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿⠀",
-                "⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀",
-                "⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀",
-                "⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀",
-                "⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀",
-                "⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀",
-                "⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀",
-                "⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀",
-                "⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-        }
-        --]=]
-        local logo = {
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡖⠁⠀⠀⠀⠀⠀⠀⠈⢲⣄⠀⠀⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⠀⣼⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣧⠀⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⣸⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣇⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⢀⣀⣤⣤⣤⣤⣀⡀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣔⢿⡿⠟⠛⠛⠻⢿⡿⣢⣿⣿⡟⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠀⣀⣤⣶⣾⣿⣿⣿⣷⣤⣀⡀⢀⣀⣤⣾⣿⣿⣿⣷⣶⣤⡀⠀⠀⠀",
-                "⠀⠀⢠⣾⣿⡿⠿⠿⠿⣿⣿⣿⣿⡿⠏⠻⢿⣿⣿⣿⣿⠿⠿⠿⢿⣿⣷⡀⠀",
-                "⠀⢠⡿⠋⠁⠀⠀⢸⣿⡇⠉⠻⣿⠇⠀⠀⠸⣿⡿⠋⢰⣿⡇⠀⠀⠈⠙⢿⡄",
-                "⠀⡿⠁⠀⠀⠀⠀⠘⣿⣷⡀⠀⠰⣿⣶⣶⣿⡎⠀⢀⣾⣿⠇⠀⠀⠀⠀⠈⢿",
-                "⠀⡇⠀⠀⠀⠀⠀⠀⠹⣿⣷⣄⠀⣿⣿⣿⣿⠀⣠⣾⣿⠏⠀⠀⠀⠀⠀⠀⢸",
-                "⠀⠁⠀⠀⠀⠀⠀⠀⠀⠈⠻⢿⢇⣿⣿⣿⣿⡸⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠈",
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⣿⣿⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-                "⠀⠀⠀⠐⢤⣀⣀⢀⣀⣠⣴⣿⣿⠿⠋⠙⠿⣿⣿⣦⣄⣀⠀⠀⣀⡠⠂⠀⠀",
-                "⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠉⠀⠀⠀⠀⠀⠈⠉⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀",
-                ""
-        }
-
-        dashboard.section.header.val = logo
-        dashboard.section.header.opts.hl = pick_color()
-
-        --[=[
-        dashboard.section.buttons.val = {
-            dashboard.button("<Leader>ff", "  File Explorer"),
-            dashboard.button("<Leader>fo", "  Find File"),
-            dashboard.button("<Leader>fw", "  Find Word"),
-            dashboard.button("<Leader>ps", "  Update plugins"),
-            dashboard.button("q", "  Quit", ":qa<cr>")
-        }
-        --]=]
+        dashboard.section.header.opts.hl = "String";
 
         dashboard.section.footer.val = footer()
         dashboard.section.footer.opts.hl = "Constant"
 
         alpha.setup(dashboard.opts)
 
-        vim.cmd([[ autocmd FileType alpha setlocal nofoldenable ]])
 end
 
 -- nvim的状态栏配置
