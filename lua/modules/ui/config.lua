@@ -86,35 +86,39 @@ end
 
 -- OneDarkPro主题配置
 function M.oneDarkConf()
-    local onedarkpro = require("onedarkpro")
-    onedarkpro.setup({
-    -- Theme can be overwritten with 'onedark' or 'onelight' as a string!
-    theme = "onelight",
-    colors = {}, -- Override default colors. Can specify colors for "onelight" or "onedark" themes by passing in a table
-    hlgroups = {}, -- Override default highlight groups
-    plugins = { -- Override which plugins highlight groups are loaded
-        native_lsp = true,
-        polygot = true,
-        treesitter = true,
-        -- Others omitted for brevity
-    },
-    styles = {
-        comments = "NONE",
-        functions = "NONE",
-        keywords = "bold,italic",
-        strings = "NONE",
-        variables = "NONE"
-    },
-    options = {
-        bold = true, -- Use the themes opinionated bold styles?
-        italic = true, -- Use the themes opinionated italic styles?
-        underline = true, -- Use the themes opinionated underline styles?
-        undercurl = true, -- Use the themes opinionated undercurl styles?
-        cursorline = false, -- Use cursorline highlighting?
-        transparency = false, -- Use a transparent background?
-        terminal_colors = false, -- Use the theme's colors for Neovim's :terminal?
-        window_unfocussed_color = true, -- When the window is out of focus, change the normal background?
-    }
+    local onedarkpro = require("onedarkpro");
+        onedarkpro.setup({
+        -- Theme can be overwritten with 'onedark' or 'onelight' as a string!
+        theme = "onelight",
+        colors = {
+            purple = "#a55eea",
+        }, -- Override default colors. Can specify colors for "onelight" or "onedark" themes by passing in a table
+        hlgroups = {
+            Title = { bg = "#a55eea" }
+        }, -- Override default highlight groups
+        plugins = { -- Override which plugins highlight groups are loaded
+            native_lsp = true,
+            polygot = true,
+            treesitter = true,
+            -- Others omitted for brevity
+        },
+        styles = {
+            comments = "italic",
+            functions = "NONE",
+            keywords = "bold,italic",
+            strings = "NONE",
+            variables = "NONE"
+        },
+        options = {
+            bold = true, -- Use the themes opinionated bold styles?
+            italic = true, -- Use the themes opinionated italic styles?
+            underline = true, -- Use the themes opinionated underline styles?
+            undercurl = true, -- Use the themes opinionated undercurl styles?
+            cursorline = false, -- Use cursorline highlighting?
+            transparency = false, -- Use a transparent background?
+            terminal_colors = false, -- Use the theme's colors for Neovim's :terminal?
+            window_unfocussed_color = true, -- When the window is out of focus, change the normal background?
+        }
     })
     -- Load the colorscheme
     onedarkpro.load()
@@ -232,7 +236,7 @@ function M.lualine()
             -- 启用图标
             icons_enabled = true,
             -- 设置主题
-            theme = "onedarkpro",
+            theme = "onelight",
             disabled_filetypes = {},
             -- 组件分割符
             component_separators = "|",
