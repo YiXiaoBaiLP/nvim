@@ -7,7 +7,7 @@ local M = {};
 --vim.go          :setglobal          set                 -
 -- vim.opt：返回一个options对象
 
-local o, bo, go, opt = vim.o, vim.bo, vim.go, vim.opt;
+local o, bo, wo, go, opt = vim.o, vim.bo, vim.wo, vim.go, vim.opt;
 local cmd = vim.cmd;
 
 function M.LoadOptions()
@@ -43,7 +43,7 @@ function M.LoadOptions()
 	-- 显示行号
 	o.number = true;
 	-- 相对的显示行号
-	o.relativenumber = true;
+	wo.relativenumber = true;
 
 end
 
