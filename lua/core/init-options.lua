@@ -202,9 +202,9 @@ function M.LoadOptions()
 	-- 本地窗口为浮动窗口启用伪透明
 	wo.winblend = 17;
 	-- 拼写检查
-	wo.spell = true;
+	--wo.spell = true;
 	-- 对指定的语言进行拼写检查
-	bo.spelllang = "en_us,cjk";
+	--bo.spelllang = "en_us,cjk";
 	-- 映射 mapleader 
 	g.mapleader = ",";
 
