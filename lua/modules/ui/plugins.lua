@@ -6,12 +6,11 @@ ui["kyazdani42/nvim-web-devicons"] = {
     opt = false
 };
 
--- OneDarkPro 主题
-ui["olimorris/onedarkpro.nvim"] = {
+-- 主题配置
+ui["marko-cerovac/material.nvim"] = {
     opt = false,
-    config = conf.oneDarkConf
-
-};
+    config = conf.materialConf
+}
 -- nvim的状态栏
 ui["nvim-lualine/lualine.nvim"] = {
     opt = true,

@@ -63,11 +63,8 @@ local defMap = {
 };
 
 function M.get()
-    -- 重新映射leader
-    vim.g.mapleader = ",";
     -- 设置按键绑定
     bind.nvimLoadMapping(defMap);
-
 end
 
 --------------------------------------------------------------------------------------------

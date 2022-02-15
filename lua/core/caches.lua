@@ -57,9 +57,9 @@ function M.createDirs()
 	if fn.isdirectory(cacheDir) == 0 then
 	    os.execute("mkdir -p " .. cacheDir);
 	    for _,v in pairs(createDir) do
-		if fn.isdirectory(v) == 0 then
-		os.execute("mkdir -p " .. v);
-		end
+			if fn.isdirectory(v) == 0 then
+				os.execute("mkdir -p " .. v);
+			end
 	    end
 	end
 end

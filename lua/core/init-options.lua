@@ -21,6 +21,11 @@ local M = {};
 local o, bo, wo, go, opt, g = vim.o, vim.bo, vim.wo, vim.go, vim.opt, vim.g;
 local cmd = vim.cmd;
 
+-- 调用临时文件保存目录
+local caches = require("core.caches");
+-- 获取缓存相关路径
+local cacheDir = caches.dirs().cacheDir;
+
 -- 关闭不需要的插件
 local disableDistributionPlugins = {
 	"loaded_gzip",
@@ -58,11 +63,19 @@ function M.LoadOptions()
 	go.virtualedit = "block";
 	-- 当backup 与 writebackup 同时为 false时，没有备份文件
 	-- 关闭文件备份
-	go.backup = false;
+	go.backup = true;
 	-- 覆盖文件前建立备份，文件写入成功后，除非 backup 打开，否则删除该备份
-	go.writebackup = false;
+	go.writebackup = true;
 	-- 关闭缓冲区使用交换文件（关闭后不要在大文件，无法恢复）
-	go.swapfile = false;
+	go.swapfile = true;
+
+	-- 配置备份文件存放路径
+	go.directory = cacheDir .. "swag/";
+	go.undodir = cacheDir .. "undo/";
+	go.backupdir = cacheDir .. "backup/";
+	go.viewdir = cacheDir .. "view/";
+	--bo.spellfile = cacheDir .. "spell/en.utf-8.add";
+
 	-- 使用系统剪贴版
 	go.clipboard = "unnamedplus";
 	-- 修复索引线

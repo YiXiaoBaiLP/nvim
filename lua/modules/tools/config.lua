@@ -1,4 +1,4 @@
-local home = require("core.CacheDir").dirs().home;
+local home = require("core.caches").dirs().home;
 local config = {};
 
 

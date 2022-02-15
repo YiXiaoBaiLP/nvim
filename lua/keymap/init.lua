@@ -8,11 +8,11 @@ local mapArgs = bind.mapArgs;
 require('keymap.config');
 
 local plugMap = {
-    ["i|<Tab>"]         = mapCMD('v:lua.tab_complete()'):withExpr():withSilent(),
-    ["i|<S-Tab>"]       = mapCMD('v:lua.s_tab_complete()'):withSilent():withExpr(),
-    ["i|<CR>"]          = mapCMD([[compe#confirm({'keys': "\<Plug>delimitMateCR", 'mode': ''})]]):withNoremap():withExpr():withNowait(),
+   -- ["i|<Tab>"]         = mapCMD('v:lua.tab_complete()'):withExpr():withSilent(),
+   -- ["i|<S-Tab>"]       = mapCMD('v:lua.s_tab_complete()'):withSilent():withExpr(),
+   -- ["i|<CR>"]          = mapCMD([[compe#confirm({'keys': "\<Plug>delimitMateCR", 'mode': ''})]]):withNoremap():withExpr():withNowait(),
     -- person keymap
-    ["n|mf"]            = mapCR("<cmd>lua require('internal.fsevent').file_event()<CR>"):withSilent():withNowait():withNoremap(),
+   -- ["n|mf"]            = mapCR("<cmd>lua require('internal.fsevent').file_event()<CR>"):withSilent():withNowait():withNoremap(),
     ["n|gb"]            = mapCR("BufferLinePick"):withNoremap():withSilent(),
 
     -- packer

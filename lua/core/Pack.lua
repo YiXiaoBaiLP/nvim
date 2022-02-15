@@ -1,7 +1,7 @@
 local fn, uv, api = vim.fn, vim.loop, vim.api;
-local cacheDir = require("core.CacheDir");
-local dataDir = cacheDir.dirs().dataDir;
-local vimPath = cacheDir.dirs().vimPath;
+local caches = require("core.caches");
+local dataDir = caches.dirs().dataDir;
+local vimPath = caches.dirs().vimPath;
 -- 模块配置文件地址
 local modulesDir = vimPath .. "/lua/modules";
 local packerCompiled = dataDir .. "packer_compiled.vim";
@@ -33,7 +33,7 @@ function _M:loadPacker()
             depth = 1,
             -- git clone 超时时间（秒）
             clone_timeout = 120,
-            default_url_format = "https://github.com.cnpmjs.org/%s"
+            default_url_format = "https://ghproxy.com/https://github.com/%s"
         },
         -- 不禁用创建
         disable_commands = true,
@@ -170,13 +170,13 @@ function plugins.loadCompile()
     else
         assert("Missing packer compile file Run PackerCompile Or PackerInstall to fix");
     end
-    cmd [[command! PackerCompile lua require("core.Pack").magicCompile()]]
-    cmd [[command! PackerInstall lua require("core.Pack").install()]]
-    cmd [[command! PackerUpdate lua require("core.Pack").update()]]
-    cmd [[command! PackerSync lua require("core.Pack").sync()]]
-    cmd [[command! PackerClean lua require("core.Pack").clean()]]
-    cmd [[autocmd User PackerCompile lua require("core.Pack").magicCompile()]]
-    cmd [[command! PackerStatus lua require("core.Pack").status()]]
+    cmd [[command! PackerCompile lua require("core.pack").magicCompile()]]
+    cmd [[command! PackerInstall lua require("core.pack").install()]]
+    cmd [[command! PackerUpdate lua require("core.pack").update()]]
+    cmd [[command! PackerSync lua require("core.pack").sync()]]
+    cmd [[command! PackerClean lua require("core.pack").clean()]]
+    cmd [[autocmd User PackerCompile lua require("core.pack").magicCompile()]]
+    cmd [[command! PackerStatus lua require("core.pack").status()]]
 end
 
 return plugins;

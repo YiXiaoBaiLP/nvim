@@ -1,6 +1,6 @@
 local config = {}
 
-function config.nvim_lsp() 
+function config.nvim_lsp()
     require("modules.completion.lspconfig")
 end
 
