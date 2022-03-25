@@ -1,35 +1,28 @@
 local M = {};
 
--- material主题配置
-function M.materialConf()
-    -- Set the theme style
-    vim.g.material_style = "palenight"
+-- 主题配置
+function M.themeConf()
+    g = vim.g;
+    -- Example config in Lua
+    g.tokyonight_style = "night";
+    -- 注释斜体
+    g.tokyonight_italic_comments = true;
+    -- 关键字斜体
+    g.tokyonight_italic_keywords = true;
+    -- 函数斜体
+    g.tokyonight_italic_functions = false;
+    -- 变量和标识符斜体
+    g.tokyonight_italic_variables = false;
+    -- 可以禁用背景色
+    g.tokyonight_transparent = false;
 
-    require('material').setup({
-        contrast = {
-            sidebars = true,
-            cursor_line = true,
-        },
-        italics = {
-            comments = false,
-            keywords = false,
-            functions = true,
-        },
-        contrast_filetypes = {
-            "terminal",
-            "packer",
-            "qf",
-        },
-        disable = {
-            borders = false,
-            eob_lines = false
-        },
-        lualine_style = 'stealth'
-    })
+    g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" };
 
-    -- Enable the colorscheme
-    vim.cmd 'colorscheme material'
+    -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+    g.tokyonight_colors = { hint = "orange", error = "#ff0000" };
 
+    -- Load the colorscheme
+    vim.cmd[[colorscheme tokyonight]]
 end
 
 -- nvim启动界面配置
@@ -105,14 +98,11 @@ function M.lualine()
             -- 启用图标
             icons_enabled = true,
             -- 设置主题
-            theme = "auto",
+            theme = "tokyonight",
             disabled_filetypes = {},
             -- 组件分割符
             component_separators = "|",
-            section_separators = {
-                left = "",
-                right = ""
-            }
+            section_separators = { left = '', right = '' },
         },
         sections = {
             lualine_a = {"mode"},
@@ -122,7 +112,10 @@ function M.lualine()
             },
             lualine_c = {
                 {"lsp_progress"},
-                {gps_content, cond = gps.is_available}
+                {
+                    gps_content, 
+                    cond = gps.is_available
+                }
             },
             lualine_x = {
                 {
@@ -135,12 +128,17 @@ function M.lualine()
                     }
                 }
             },
-            lualine_y = {"filetype", "encoding", "fileformat"},
-            lualine_z = {
+            lualine_y = {
+                "filetype", 
                 "progress",
                 "location"
+            },
+            lualine_z = {
+                "fileformat",
+                "encoding"
             }
         },
+        -- 不活跃时显示的内容
         inactive_sections = {
             lualine_a = {},
             lualine_b = {},
@@ -150,6 +148,7 @@ function M.lualine()
             lualine_z = {}
         },
         tabline = {},
+        -- 为特定的插件配置窗口
         extensions = {
             "quickfix",
             "nvim-tree",

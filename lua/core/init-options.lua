@@ -1,6 +1,5 @@
 local M = {};
 
-
 --    lua            command      global_value       local_value ~
 --vim.o           :set                set                set
 --vim.bo/vim.wo   :setlocal            -                 set
@@ -75,6 +74,11 @@ function M.LoadOptions()
 	go.backupdir = cacheDir .. "backup/";
 	go.viewdir = cacheDir .. "view/";
 	--bo.spellfile = cacheDir .. "spell/en.utf-8.add";
+	-- 显示行号
+	go.number = true;
+	-- 相对的显示行号
+	wo.relativenumber = true;
+    wo.cursorline = true;
 
 	-- 使用系统剪贴版
 	go.clipboard = "unnamedplus";
@@ -86,10 +90,6 @@ function M.LoadOptions()
 	o.history = 2000;
 	-- 给出换行符的格式（<EOL>)
 	o.fileformats = "unix,dos,mac";
-	-- 显示行号
-	o.number = true;
-	-- 相对的显示行号
-	wo.relativenumber = true;
 	-- 关闭八进制
 	bo.nrformats = "bin,hex";
 	go.magic = true;
@@ -223,7 +223,7 @@ function M.LoadOptions()
 
 	--关闭不需要的插件
 	for k, v in pairs(disableDistributionPlugins) do
-	g[v] = 1;
+        g[v] = 1;
 	end
 end
 

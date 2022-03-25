@@ -7,10 +7,12 @@ ui["kyazdani42/nvim-web-devicons"] = {
 };
 
 -- 主题配置
-ui["marko-cerovac/material.nvim"] = {
+ui["folke/tokyonight.nvim"] = {
     opt = false,
-    config = conf.materialConf
+    config = conf.themeConf
+
 }
+
 -- nvim的状态栏
 ui["nvim-lualine/lualine.nvim"] = {
     opt = true,
