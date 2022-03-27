@@ -47,7 +47,8 @@ completion["hrsh7th/nvim-cmp"] = {
         },
         {
             "andersevenrud/compe-tmux",
-            branch = "cmp",
+            -- 使用分支
+            --branch = "compe",
             after = "cmp-nvim-lua"
         },
         {

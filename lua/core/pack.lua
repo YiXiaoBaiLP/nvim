@@ -43,6 +43,7 @@ function _M:loadPacker()
             end
         }
     });
+    -- 重置插件
     packer.reset();
     local use = packer.use;
     -- 加载本地插件配置
@@ -97,7 +98,7 @@ function _M:initEnsurePlugins()
         end)
         -- 加载Packer包管理器
         self:loadPacker();
-        -- packer包方法
+        -- packer包方法: 安装插件
         packer.install();
     end
 end
@@ -150,8 +151,8 @@ function plugins.convertCompileFile()
 end
 
 function plugins.magicCompile()
-    plugins.compile();
     plugins.convertCompileFile();
+    plugins.compile();
 end
 
 function plugins.autoCompile()

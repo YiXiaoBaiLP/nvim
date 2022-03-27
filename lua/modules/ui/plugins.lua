@@ -8,9 +8,7 @@ ui["kyazdani42/nvim-web-devicons"] = {
 
 -- 主题配置
 ui["folke/tokyonight.nvim"] = {
-    opt = false,
     config = conf.themeConf
-
 }
 
 -- nvim的状态栏
@@ -26,12 +24,12 @@ ui["arkav/lualine-lsp-progress"] = {
     after = "nvim-gps"
 };
 -- 启动界面
---[=[
+-- 关闭此插件
 ui["glepnir/dashboard-nvim"] = {
+    disable = false,
     opt = true,
     event = "BufWinEnter"
 };
---]=]
 ui["goolord/alpha-nvim"] = {
     opt = false,
     config = conf.alphaConf
@@ -52,7 +50,6 @@ ui["lewis6991/gitsigns.nvim"] = {
         "nvim-lua/plenary.nvim",
         opt = true
     }
-
 };
 -- 缩进
 ui["lukas-reineke/indent-blankline.nvim"] = {

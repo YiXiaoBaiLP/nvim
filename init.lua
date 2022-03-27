@@ -8,7 +8,7 @@
 --]=]
 
 -- 加载nvim的基本配置
-require("core.init-options");
+require("core.options");
 -- 创建备份、缓存等文件夹
 local caches =require("core.caches");
 -- 加载包管理工具
