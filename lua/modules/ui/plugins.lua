@@ -24,12 +24,6 @@ ui["arkav/lualine-lsp-progress"] = {
     after = "nvim-gps"
 };
 -- 启动界面
--- 关闭此插件
-ui["glepnir/dashboard-nvim"] = {
-    disable = false,
-    opt = true,
-    event = "BufWinEnter"
-};
 ui["goolord/alpha-nvim"] = {
     opt = false,
     config = conf.alphaConf
