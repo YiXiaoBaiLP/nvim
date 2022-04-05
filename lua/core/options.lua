@@ -78,7 +78,7 @@ wo.number = true;
 -- 相对的显示行号
 wo.relativenumber = true;
 wo.cursorline = true;
-wo.cursorcolumn = true;
+--wo.cursorcolumn = true;
 
 -- 使用系统剪贴版
 go.clipboard = "unnamedplus";
