@@ -49,6 +49,8 @@ local disableDistributionPlugins = {
 
 -- 使vim支持真彩（highlight-guifg 和 highlight-guibg)
 go.termguicolors = true;
+-- 字体设置
+go.guifont = "FuraCode Nerd Font:h12";
 -- 允许使用鼠标，a：所有模式中允许
 go.mouse = "a";
 -- 关闭错误信息响铃
