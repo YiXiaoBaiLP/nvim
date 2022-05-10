@@ -2,7 +2,7 @@
 -- 配置备份文件路径
 --]=]
 
-local M = {};
+M = {};
 
 -- 获取系统名称
 local osName = vim.loop.os_uname().sysname;
@@ -14,8 +14,10 @@ local vimPath = fn.stdpath("config");
 -- 判断系统类型
 local pathSep = "";
 local home = "";
+local mkdirComm = "mkdir -p ";
 if tostring(osName) == "Windows_NT" then
     pathSep = "\\";
+    mkdirComm = "mkdir ";
     home = os.getenv("USERPROFILE");
 else
     pathSep = "/";
@@ -29,18 +31,6 @@ local cacheDir = home .. pathSep .. ".cache" .. pathSep .. "nvim" .. pathSep;
 -- 插件模块文件夹
 local modulesDir = vimPath .. pathSep .. "modules";
 
--- 设置缓存以及备份相关目录
-function M.dirs()
-	local dirs = {
-	    vimPath = vimPath;
-	    cacheDir = cacheDir;
-	    modulesDir = modulesDir;
-	    home = home;
-	    dataDir = dataDir;
-	};
-
-    return dirs;
-end
 
 
 -- 创建缓存文件夹
@@ -55,14 +45,22 @@ function M.createDirs()
 	};
 
 	if fn.isdirectory(cacheDir) == 0 then
-	    os.execute("mkdir -p " .. cacheDir);
+	    os.execute(mkdirComm .. cacheDir);
 	    for _,v in pairs(createDir) do
 			if fn.isdirectory(v) == 0 then
-				os.execute("mkdir -p " .. v);
+				os.execute(mkdirComm .. v);
 			end
 	    end
 	end
 end
 
+-- 设置缓存以及备份相关目录
+M = {
+    vimPath = vimPath;
+    cacheDir = cacheDir;
+    modulesDir = modulesDir;
+    home = home;
+    dataDir = dataDir;
+};
 ---------------------------------------------------------------------------------------
 return M;

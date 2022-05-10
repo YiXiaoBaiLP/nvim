@@ -1,4 +1,6 @@
-local M = {};
+--
+--  nvim 基本设置
+--
 
 --    lua            command      global_value       local_value ~
 --vim.o           :set                set                set
@@ -21,9 +23,8 @@ o, bo, wo, go, opt, g = vim.o, vim.bo, vim.wo, vim.go, vim.opt, vim.g;
 local cmd = vim.cmd;
 
 -- 调用临时文件保存目录
-local caches = require("core.caches");
 -- 获取缓存相关路径
-local cacheDir = caches.dirs().cacheDir;
+local cacheDir = require("core.filepaths").cacheDir;
 
 -- 关闭不需要的插件
 local disableDistributionPlugins = {
@@ -70,9 +71,13 @@ go.writebackup = true;
 go.swapfile = true;
 
 -- 配置备份文件存放路径
-go.directory = cacheDir .. "swag/";
+-- 交换文件的目录名
+go.directory = cacheDir .. "swap/";
+-- 撤消文件的目录名列表
 go.undodir = cacheDir .. "undo/";
+-- 备份文件目录
 go.backupdir = cacheDir .. "backup/";
+-- 用于存储文件的目录名
 go.viewdir = cacheDir .. "view/";
 --bo.spellfile = cacheDir .. "spell/en.utf-8.add";
 -- 显示行号
@@ -224,6 +229,6 @@ wo.winblend = 17;
 g.mapleader = ",";
 
 --关闭不需要的插件
-for k, v in pairs(disableDistributionPlugins) do
+for v in pairs(disableDistributionPlugins) do
     g[v] = 1;
 end
