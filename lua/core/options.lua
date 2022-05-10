@@ -23,8 +23,12 @@ o, bo, wo, go, opt, g = vim.o, vim.bo, vim.wo, vim.go, vim.opt, vim.g;
 local cmd = vim.cmd;
 
 -- 调用临时文件保存目录
+-- 创建备份、缓存等文件夹
+local filepathshes = require("core.filepaths");
 -- 获取缓存相关路径
-local cacheDir = require("core.filepaths").cacheDir;
+local cacheDir = filepathshes.cacheDir;
+-- 创建文件路径
+--filepathshes.createDirs();
 
 -- 关闭不需要的插件
 local disableDistributionPlugins = {
