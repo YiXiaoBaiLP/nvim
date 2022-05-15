@@ -4,9 +4,13 @@ function rhsOptions:new()
     local instance = {
         cmd = '',
         options = {
+            -- 映射
             noremap = false,
+            -- 命令不回显
             silent = false,
+            -- 表达式
             expr = false,
+            -- 等待
             nowait = false,
         }
     };
@@ -52,6 +56,15 @@ end
 
 function rhsOptions:withNowait()
     self.options.nowait = true;
+    return self;
+end
+
+-- 自定义命令(function)
+function rhsOptions:customComm(cmdString)
+    if(cmdString == nil or type(cmdString) ~= "function") then
+        return;
+    end
+        self.options["callback"] = cmdString;
     return self;
 end
 

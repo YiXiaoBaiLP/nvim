@@ -1,7 +1,7 @@
 local ui = {};
 local conf = require('modules.ui.config');
 
--- 彩色图标
+-- 该插件为每个图标提供相同的图标和颜色
 ui["kyazdani42/nvim-web-devicons"] = {
     opt = false
 };
@@ -18,6 +18,12 @@ ui["nvim-lualine/lualine.nvim"] = {
     config = conf.lualine
 
 };
+-- 简单的状态栏组件，显示您在其中工作的范围
+ui["SmiteshP/nvim-gps"] = {
+	opt = true,
+	after = "nvim-treesitter",
+	config = conf.nvimGps,
+};
 -- 将lsp的进度添加到nvim的状态栏上
 ui["arkav/lualine-lsp-progress"] = {
     opt = true,
@@ -25,15 +31,16 @@ ui["arkav/lualine-lsp-progress"] = {
 };
 -- 启动界面
 ui["goolord/alpha-nvim"] = {
-    opt = false,
+    opt = true,
+    event = "BufWinEnter",
     config = conf.alphaConf
 
 }
 -- lua编写的文件管理器
 ui["kyazdani42/nvim-tree.lua"] = {
     opt = true,
-    cmd = {"NvimTreeToggle", "NvimTreeOpen"},
-    config = conf.nvim_tree
+    cmd = {"NvimTreeToggle"},
+    config = conf.nvimTree
 };
 -- Git装饰插件
 ui["lewis6991/gitsigns.nvim"] = {
@@ -49,18 +56,28 @@ ui["lewis6991/gitsigns.nvim"] = {
 ui["lukas-reineke/indent-blankline.nvim"] = {
     opt = true,
     event = "BufRead",
-    config = conf.indent_blankline
+    config = conf.indentBlankline
 };
 -- 缓冲线插件
 ui["akinsho/bufferline.nvim"] = {
     opt = true,
+    tag = "*",
     event = "BufRead",
-    config = conf.nvim_bufferline
+    config = conf.nvimBufferline
 };
 -- 显示一个滚动条
-ui["dstein64/nvim-scrollview"] = {
-    opt = true,
-    event = "BufRead"
+ui["petertriho/nvim-scrollbar"] = {
+	opt = true,
+	event = "BufRead",
+	config = function()
+		require("scrollbar").setup()
+	end,
 };
+
+-- 可视化撤销命令
+ui["mbbill/undotree"] = {
+	opt = true,
+	cmd = "UndotreeToggle",
+}
 
 return ui;

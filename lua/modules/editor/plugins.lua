@@ -25,15 +25,38 @@ editor["nvim-treesitter/nvim-treesitter"] = {
     opt = true,
     run = ":TSUpdate",
     event = "BufRead",
-    config = conf.nvim_treesitter
+    config = conf.nvimTreesitter
 };
-
--- 简单的状态行组件
-editor["SmiteshP/nvim-gps"] = {
-    opt = true,
-    after = "nvim-treesitter",
-    config = conf.nvim_gps
-};
-
-
+editor["nvim-treesitter/nvim-treesitter-textobjects"] = {
+	opt = true,
+	after = "nvim-treesitter",
+}
+-- 彩虹括号，依赖nvim-treesitter
+editor["p00f/nvim-ts-rainbow"] = {
+	opt = true,
+	after = "nvim-treesitter",
+	event = "BufRead",
+}
+-- 添加注释
+editor["JoosepAlviste/nvim-ts-context-commentstring"] = {
+	opt = true,
+	after = "nvim-treesitter",
+}
+-- 区域选择，提示由treesitter提供支持的文档的AST节点
+editor["mfussenegger/nvim-ts-hint-textobject"] = {
+	opt = true,
+	after = "nvim-treesitter",
+}
+-- 标签的自关闭和重命名
+editor["windwp/nvim-ts-autotag"] = {
+	opt = true,
+	ft = { "html", "xml" },
+	config = conf.autotag,
+}
+-- 增强版的单词选择插件
+editor["andymass/vim-matchup"] = {
+	opt = true,
+	after = "nvim-treesitter",
+	config = conf.matchup,
+}
 return editor;

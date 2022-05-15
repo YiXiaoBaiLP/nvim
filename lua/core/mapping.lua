@@ -9,9 +9,9 @@ local mapCMD = bind.mapCMD;
 local defMap = {
     -- Vim map
     -- 删除当前缓冲区（未修改的）
-    ["n|<C-x>k"] = mapCR('bdelete'):withNoremap():withSilent(),
+    ["n|<C-x>k"] = mapCR("bdelete"):withNoremap():withSilent(),
     -- 内容写入文件
-    ["n|<C-s>"]  = mapCU('write'):withNoremap(),
+    ["n|<C-s>"]  = mapCU("write"):withNoremap(),
     -- 复制一行
     ["n|Y"]      = mapCMD('y$'),
     -- 删除一行
@@ -35,7 +35,7 @@ local defMap = {
     ["n|<Leader>ss"]= mapCU('SessionSave'):withNoremap(),
     ["n|<Leader>sl"]= mapCU('SessionLoad'):withNoremap(),
     -- 关闭高亮显示
-    ["n|<Leader><CR>"] = mapCR("nohlsearch"):withNoremap(),
+    ["n|<Leader><CR>"] = mapCR("nohlsearch"):withNoremap():withSilent(),
 
     -- Insert
     ["i|<C-w>"]     = mapCMD('<C-[>diwa'):withNoremap(),

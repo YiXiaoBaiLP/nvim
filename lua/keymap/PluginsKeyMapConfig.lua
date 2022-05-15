@@ -5,7 +5,7 @@ local mapCR = bind.mapCR;
 local mapCU = bind.mapCU;
 local mapCMD = bind.mapCMD;
 local mapArgs = bind.mapArgs;
-require('keymap.config');
+--require('keymap.config');
 
 local plugMap = {
    -- ["i|<Tab>"]         = mapCMD('v:lua.tab_complete()'):withExpr():withSilent(),
@@ -13,13 +13,37 @@ local plugMap = {
    -- ["i|<CR>"]          = mapCMD([[compe#confirm({'keys': "\<Plug>delimitMateCR", 'mode': ''})]]):withNoremap():withExpr():withNowait(),
     -- person keymap
    -- ["n|mf"]            = mapCR("<cmd>lua require('internal.fsevent').file_event()<CR>"):withSilent():withNowait():withNoremap(),
-    ["n|gb"]            = mapCR("BufferLinePick"):withNoremap():withSilent(),
+	-- Bufferline
+    -- 标签相关插件
+	["n|gb"] = mapCR("BufferLinePick"):withNoremap():withSilent(),
+	["n|<A-j>"] = mapCR("BufferLineCycleNext"):withNoremap():withSilent(),
+	["n|<A-k>"] = mapCR("BufferLineCyclePrev"):withNoremap():withSilent(),
+	["n|<A-S-j>"] = mapCR("BufferLineMoveNext"):withNoremap():withSilent(),
+	["n|<A-S-k>"] = mapCR("BufferLineMovePrev"):withNoremap():withSilent(),
+	["n|<leader>be"] = mapCR("BufferLineSortByExtension"):withNoremap(),
+	["n|<leader>bd"] = mapCR("BufferLineSortByDirectory"):withNoremap(),
+	["n|<A-1>"] = mapCR("BufferLineGoToBuffer 1"):withNoremap():withSilent(),
+	["n|<A-2>"] = mapCR("BufferLineGoToBuffer 2"):withNoremap():withSilent(),
+	["n|<A-3>"] = mapCR("BufferLineGoToBuffer 3"):withNoremap():withSilent(),
+	["n|<A-4>"] = mapCR("BufferLineGoToBuffer 4"):withNoremap():withSilent(),
+	["n|<A-5>"] = mapCR("BufferLineGoToBuffer 5"):withNoremap():withSilent(),
+	["n|<A-6>"] = mapCR("BufferLineGoToBuffer 6"):withNoremap():withSilent(),
+	["n|<A-7>"] = mapCR("BufferLineGoToBuffer 7"):withNoremap():withSilent(),
+	["n|<A-8>"] = mapCR("BufferLineGoToBuffer 8"):withNoremap():withSilent(),
+	["n|<A-9>"] = mapCR("BufferLineGoToBuffer 9"):withNoremap():withSilent(),
 
     -- packer
     ["n|<Leader>pu"]    = mapCR("PackerUpdate"):withSilent():withNoremap():withNowait(),
     ["n|<Leader>pi"]    = mapCR("PackerInstall"):withSilent():withNoremap():withNowait(),
     ["n|<Leader>pc"]    = mapCR("PackerCompile"):withSilent():withNoremap():withNowait(),
-
+    -- Plugin nvim-tree
+    -- 文件目录树插件
+	["n|<C-n>"] = mapCR("NvimTreeToggle"):withNoremap():withSilent(),
+	["n|<Leader>nf"] = mapCR("NvimTreeFindFile"):withNoremap():withSilent(),
+	["n|<Leader>nr"] = mapCR("NvimTreeRefresh"):withNoremap():withSilent(),
+	-- Plugin Undotree
+    -- 可视化历史命令
+	["n|<Leader>u"]     = mapCR("UndotreeToggle"):withNoremap():withSilent(),
     -- Lsp mapp work when insertenter and lsp start
     ["n|<Leader>li"]    = mapCR("LspInfo"):withNoremap():withSilent():withNowait(),
     ["n|<Leader>ll"]    = mapCR("LspLog"):withNoremap():withSilent():withNowait(),
