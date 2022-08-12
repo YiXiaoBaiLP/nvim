@@ -92,7 +92,7 @@ function _M:initEnsurePlugins()
     if not state then
         local cmd = "!git clone https://github.com/wbthomason/packer.nvim " .. packerDir;
         api.nvim_command(cmd);
-        -- TODO：在nvim-data/site/路径下创建了一个lua文件夹，目前不知道干啥用的
+        -- 编译路径
         uv.fs_mkdir(dataDir .. "lua", 511, function()
             assert("make compile path dir faield");
         end)
@@ -146,7 +146,6 @@ function plugins.convertCompileFile()
         file:write(line);
     end
     file:close();
-    
     os.remove(packerCompiled);
 end
 

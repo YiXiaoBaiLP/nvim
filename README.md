@@ -1,4 +1,5 @@
 ##  使用lua语法配置nvim配置文件
+#### 参考[ayamir/nvimdots](https://github.dev/ayamir/nvimdots)
 
 #### lua写的包管理器
 - 安装方式：
