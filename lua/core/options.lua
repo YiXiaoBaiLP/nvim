@@ -19,7 +19,7 @@
 	|vim-variable|       v:	  Global, predefined by Vim.
 --]=]
 
-o, bo, wo, go, opt, g = vim.o, vim.bo, vim.wo, vim.go, vim.opt, vim.g;
+local o, bo, wo, go, opt, g = vim.o, vim.bo, vim.wo, vim.go, vim.opt, vim.g;
 local cmd = vim.cmd;
 
 -- 调用临时文件保存目录
@@ -215,11 +215,11 @@ o.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
 -- 打开时，行首的<Tab> 根据 shiftwidth 选项插入空白
 go.smarttab = true;
 -- 设置 TAB 的长度
-bo.tabstop = 4;
+o.tabstop = 4;
 -- 编辑时，插入<Tab>或者使用<BS>时，把<TAB>算作空格的数目
 bo.softtabstop = 4;
 -- 缩进的长度
-bo.shiftwidth = 4;
+o.shiftwidth = 4;
 -- 将TAB转换成空格
 bo.expandtab = true;
 -- 使用'<' 或 ’'>' 缩进时将<Tab>替换成空格
