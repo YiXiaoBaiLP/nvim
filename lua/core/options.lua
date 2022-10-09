@@ -25,10 +25,10 @@ local cmd = vim.cmd;
 -- 调用临时文件保存目录
 -- 创建备份、缓存等文件夹
 local filepathshes = require("core.filepaths");
+-- 创建缓存文件夹
+filepathshes.createDir();
 -- 获取缓存相关路径
 local cacheDir = filepathshes.cacheDir;
--- 创建文件路径
---filepathshes.createDirs();
 
 -- 关闭不需要的插件
 local disableDistributionPlugins = {

@@ -63,6 +63,8 @@ function _M:loadPlugins()
         -- 取得模块文件中所有plugins.lua配置文件,路径拼接
         local tmp = vim.split(fn.globpath(modulesDir, "*/plugins.lua"), "\n");
         for _,f in ipairs(tmp) do
+            print(f .. modulesDir);
+            print(f:sub(#modulesDir - 6, - 1));
             list[#list+1] = f:sub(#modulesDir - 6, - 1);
         end
         return list;

@@ -29,7 +29,6 @@ end
 local cacheDir = home .. pathSep .. ".cache" .. pathSep .. "nvim" .. pathSep;
 -- 插件模块文件夹
 local modulesDir = configurePaths .. pathSep .. "modules";
-
 -- 创建缓存文件夹
 local createDir = {
     backup = cacheDir .. "backup";
@@ -39,15 +38,6 @@ local createDir = {
     undo = cacheDir .. "undo";
 };
 
-if fn.isdirectory(cacheDir) == 0 then
-    os.execute(mkdirComm .. cacheDir);
-    for _,v in pairs(createDir) do
-        if fn.isdirectory(v) == 0 then
-            os.execute(mkdirComm .. v);
-        end
-    end
-end
-
 -- 设置缓存以及备份相关目录
 M = {
     vimPath = configurePaths;
@@ -55,6 +45,16 @@ M = {
     modulesDir = modulesDir;
     home = home;
     dataDir = dataDir;
+    createDir = function ()
+        if fn.isdirectory(cacheDir) == 0 then
+            os.execute(mkdirComm .. cacheDir);
+        end
+        for _,v in pairs(createDir) do
+            if fn.isdirectory(v) == 0 then
+                os.execute(mkdirComm .. v);
+            end
+        end
+    end
 };
 ---------------------------------------------------------------------------------------
 return M;
