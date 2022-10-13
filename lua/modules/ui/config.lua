@@ -1,28 +1,51 @@
 local M = {};
 
--- 主题配置
-function M.themeConf()
-    g = vim.g;
-    -- Example config in Lua
-    g.tokyonight_style = "night";
-    -- 注释斜体
-    g.tokyonight_italic_comments = true;
-    -- 关键字斜体
-    g.tokyonight_italic_keywords = true;
-    -- 函数斜体
-    g.tokyonight_italic_functions = false;
-    -- 变量和标识符斜体
-    g.tokyonight_italic_variables = false;
-    -- 可以禁用背景色
-    g.tokyonight_transparent = false;
-
-    g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" };
-
-    -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-    g.tokyonight_colors = { hint = "orange", error = "#ff0000" };
-
-    -- Load the colorscheme
-    vim.cmd[[colorscheme tokyonight]]
+function M.dracula_conf()
+	local dracula = require("dracula")
+	dracula.setup({
+		-- customize dracula color palette
+		colors = {
+			bg = "#282A36",
+			fg = "#F8F8F2",
+			selection = "#44475A",
+			comment = "#6272A4",
+			red = "#FF5555",
+			orange = "#FFB86C",
+			yellow = "#F1FA8C",
+			green = "#50fa7b",
+			purple = "#BD93F9",
+			cyan = "#8BE9FD",
+			pink = "#FF79C6",
+			bright_red = "#FF6E6E",
+			bright_green = "#69FF94",
+			bright_yellow = "#FFFFA5",
+			bright_blue = "#D6ACFF",
+			bright_magenta = "#FF92DF",
+			bright_cyan = "#A4FFFF",
+			bright_white = "#FFFFFF",
+			menu = "#21222C",
+			visual = "#3E4452",
+			gutter_fg = "#4B5263",
+			nontext = "#3B4048",
+		},
+		-- show the '~' characters after the end of buffers
+		show_end_of_buffer = true, -- default false
+		-- use transparent background
+		transparent_bg = true, -- default false
+		-- set custom lualine background color
+		lualine_bg_color = "#44475a", -- default nil
+		-- set italic comment
+		italic_comment = true, -- default false
+		-- overrides the default highlights see `:h synIDattr`
+		overrides = {
+			-- Examples
+			-- NonText = { fg = dracula.colors().white }, -- set NonText fg to white
+			-- NvimTreeIndentMarker = { link = "NonText" }, -- link to NonText highlight
+			-- Nothing = {} -- clear highlight of Nothing
+		},
+	})
+	-- Load the colorscheme
+    vim.cmd[[colorscheme dracula]]
 end
 
 -- 状态栏指示插件配置
@@ -170,7 +193,7 @@ function M.lualine()
             -- 启用图标
             icons_enabled = true,
             -- 设置主题
-            theme = "tokyonight",
+            theme = "dracula-nvim",
             disabled_filetypes = {},
             -- 组件分割符
             component_separators = "|",

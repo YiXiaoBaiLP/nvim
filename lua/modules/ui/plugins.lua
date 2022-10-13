@@ -6,9 +6,9 @@ ui["kyazdani42/nvim-web-devicons"] = {
     opt = false
 };
 
--- 主题配置
-ui["folke/tokyonight.nvim"] = {
-    config = conf.themeConf
+-- 吸血鬼主题
+ui["Mofiqul/dracula.nvim"] = {
+    config = conf.dracula_conf
 }
 
 -- nvim的状态栏
