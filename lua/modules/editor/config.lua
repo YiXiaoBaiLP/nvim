@@ -89,7 +89,7 @@ function config.nvimTreesitter()
 	require("nvim-treesitter.install").prefer_git = true
 	local parsers = require("nvim-treesitter.parsers").get_parser_configs()
 	for _, p in pairs(parsers) do
-		p.install_info.url = p.install_info.url:gsub("https://github.com/", "git@github.com:")
+		p.install_info.url = p.install_info.url:gsub("https://ghproxy.com/https://github.com/", "git@github.com:")
 	end
 end
 -- 自动添加关闭标签

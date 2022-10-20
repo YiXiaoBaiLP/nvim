@@ -1,5 +1,26 @@
 local M = {};
 
+function M.icons_conf()
+	require'nvim-web-devicons'.setup {
+		-- your personnal icons can go here (to override)
+		-- you can specify color or cterm_color instead of specifying both of them
+		-- DevIcon will be appended to `name`
+		override = {
+		 zsh = {
+		   icon = "",
+		   color = "#428850",
+		   cterm_color = "65",
+		   name = "Zsh"
+		 }
+		};
+		-- globally enable different highlight colors per icon (default to true)
+		-- if set to false all icons will have the default icon's color
+		color_icons = true;
+		-- globally enable default icons (default to false)
+		-- will get overriden by `get_icons` option
+		default = true;
+	   }
+end
 function M.dracula_conf()
 	local dracula = require("dracula")
 	dracula.setup({
@@ -31,7 +52,7 @@ function M.dracula_conf()
 		-- show the '~' characters after the end of buffers
 		show_end_of_buffer = true, -- default false
 		-- use transparent background
-		transparent_bg = true, -- default false
+		transparent_bg = false, -- default false
 		-- set custom lualine background color
 		lualine_bg_color = "#44475a", -- default nil
 		-- set italic comment
@@ -44,8 +65,6 @@ function M.dracula_conf()
 			-- Nothing = {} -- clear highlight of Nothing
 		},
 	})
-	-- Load the colorscheme
-    vim.cmd[[colorscheme dracula]]
 end
 
 -- 状态栏指示插件配置
@@ -76,17 +95,14 @@ function M.alphaConf()
 	local alpha = require("alpha")
 	local dashboard = require("alpha.themes.dashboard")
     -- 开始界面的字符画
-	dashboard.section.header.val = {  [[                                                                                  ]],
-        [[                                                                                  ]],
-        [[ __   __    _    __  __     _                      ___              _             ]],
-        [[ \ \ / /   (_)   \ \/ /    (_)    __ _     ___    | _ )   __ _     (_)      o O O ]],
-        [[  \ V /    | |    >  <     | |   / _` |   / _ \   | _ \  / _` |    | |     o      ]],
-        [[  _|_|_   _|_|_  /_/\_\   _|_|_  \__,_|   \___/   |___/  \__,_|   _|_|_   TS__[O] ]],
-        [[_| """ |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======| ]],
-        [["`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000' ]],
-        [[                                                                                  ]],
-        [[                                                                                  ]],
-    }
+	dashboard.section.header.val = {
+		[[       ██╗  ██╗██╗ █████╗  ██████╗     ██╗     ██╗██╗   ██╗       ]],
+		[[       ╚██╗██╔╝██║██╔══██╗██╔═══██╗    ██║     ██║██║   ██║       ]],
+		[[        ╚███╔╝ ██║███████║██║   ██║    ██║     ██║██║   ██║       ]],
+		[[        ██╔██╗ ██║██╔══██║██║   ██║    ██║     ██║██║   ██║       ]],
+		[[       ██╔╝ ██╗██║██║  ██║╚██████╔╝    ███████╗██║╚██████╔╝       ]],
+		[[       ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝     ╚══════╝╚═╝ ╚═════╝        ]],
+	};
 
 	local function button(sc, txt, leader_txt, keybind, keybind_opts)
 		local sc_after = sc:gsub("%s", ""):gsub(leader_txt, "<leader>")

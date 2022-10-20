@@ -8,5 +8,8 @@ local keymap = require("core.mapping");
 --require("keymap.PluginsKeyMapConfig");
 
 -- 初始化包管理工具
-packer.ensurePlugins();
-packer.loadCompile();
+packer.ensure_plugins();
+packer.load_compile();
+
+-- 加载主题
+vim.cmd[[colorscheme dracula]]

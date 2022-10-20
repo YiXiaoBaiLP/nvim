@@ -3,7 +3,7 @@ local conf = require('modules.ui.config');
 
 -- 该插件为每个图标提供相同的图标和颜色
 ui["kyazdani42/nvim-web-devicons"] = {
-    opt = false
+    config = conf.icons_conf
 };
 
 -- 吸血鬼主题
@@ -73,11 +73,9 @@ ui["petertriho/nvim-scrollbar"] = {
 		require("scrollbar").setup()
 	end,
 };
-
 -- 可视化撤销命令
 ui["mbbill/undotree"] = {
 	opt = true,
 	cmd = "UndotreeToggle",
 }
-
 return ui;
