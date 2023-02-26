@@ -71,7 +71,7 @@ go.hidden = true;
 go.virtualedit = "block";
 -- 当backup 与 writebackup 同时为 false时，没有备份文件
 -- 关闭文件备份
-go.backup = true;
+go.backup = false;
 -- 覆盖文件前建立备份，文件写入成功后，除非 backup 打开，否则删除该备份
 go.writebackup = true;
 -- 关闭缓冲区使用交换文件（关闭后不要在大文件，无法恢复）
@@ -92,7 +92,7 @@ wo.number = true;
 -- 相对的显示行号
 wo.relativenumber = true;
 wo.cursorline = true;
---wo.cursorcolumn = true;
+o.cursorcolumn = true;
 
 -- 使用系统剪贴版
 go.clipboard = "unnamedplus";
@@ -104,6 +104,7 @@ o.conceallevel = 0;
 o.history = 2000;
 -- 给出换行符的格式（<EOL>)
 o.fileformats = "unix,dos,mac";
+o.foldenable = true;
 -- 关闭八进制
 bo.nrformats = "bin,hex";
 go.magic = true;
@@ -117,7 +118,7 @@ go.sessionoptions = "curdir,help,tabpages,winsize";
 go.wildignorecase = true;
 -- 文件模式的列表，忽略这些文件
 go.wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**";
-go.shada = "!,'1000,<300,@120,s10,h";
+go.shada = "!,'300,<50,@100,s10,h";
 -- 跳过此目录的文件备份
 go.backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim";
 -- 缩进取整到 shiftwidth的倍数，用于 > 和 < 命令
@@ -143,7 +144,7 @@ go.incsearch = true;
 -- 打开回绕查询
 go.wrapscan = true;
 -- 设置插入模式补全的匹配
---complete = ".,w,b,k";
+o.complete = ".,w,b,k";
 
 -- nosplit 在缓冲区中以增量方式显示命令的效果。
 -- split 与“nosplit”类似，但也在预览窗口中显示部分离屏结果。
@@ -153,17 +154,19 @@ go.grepformat = "%f:%l:%c:%m";
 o.grepprg = "rg --hidden --vimgrep --smart-case --";
 -- 可以指定的字符中换行
 go.breakat = [[\ \ ;:,!?]];
+o.breakindentopt = "shift:2,min:20";
 -- 页面移动时不将光标移动到第一个非空字符上，而是保持在本列中
 go.startofline = false;
 -- 当光标到最右边或者最左边，按以下按键光标会移动到上一行或下一行
 go.whichwrap = "h,l,<,>,[,],~";
 -- 控制缓冲区的切换行为
 go.switchbuf = "useopen";
---backspace = "indent,eol,start",
+o.backspace = "indent,eol,start";
 -- 比较模式的选项
 go.diffopt = "filler,iwhite,internal,algorithm:patience";
 -- 用于插入模式的补全操作
-opt.completeopt = "menu,menuone,noselect";
+opt.completeopt = "menuone,noselect";
+o.concealcursor = "niv";
 go.jumpoptions = "stack";
 -- 如果处于插入、替换或可视化模式，则将消息放在最后一行。
 go.showmode = false;
@@ -192,7 +195,7 @@ go.previewheight = 17;
 -- 屏幕最后一行显示命令（如果终端变得很慢，关闭此选项）
 go.showcmd = true;
 -- 命令行使用的屏幕行数
-go.cmdheight = 2;
+go.cmdheight = 2; -- 0, 1, 2
 -- 打开命令窗口的大小 普通界面 q: 打开 或者命令行 :<C-F> 打开 
 go.cmdwinheight = 17;
 -- 关闭：分割窗口会减少当前窗口的尺寸，并保持其他窗口不变
@@ -206,7 +209,7 @@ go.splitbelow = true;
 go.splitright = true;
 -- 最后一个窗口是否拥有状态栏（2:总是拥有）
 go.laststatus = 2;
---display = "lastline",
+o.display = "lastline";
 -- 回绕行放置在开头的字符串
 o.showbreak = "↳  ";
 -- 显示特殊字符，其中Tab使用高亮~代替，尾部空白使用高亮点号代替
@@ -224,6 +227,8 @@ o.shiftwidth = 4;
 bo.expandtab = true;
 -- 使用'<' 或 ’'>' 缩进时将<Tab>替换成空格
 bo.autoindent = true;
+o.autoread = true;
+o.autowrite = true;
 -- 为弹出菜单启用伪透明
 go.pumblend = 17;
 -- 本地窗口为浮动窗口启用伪透明
@@ -238,4 +243,33 @@ g.mapleader = ",";
 --关闭不需要的插件
 for v in pairs(disableDistributionPlugins) do
     g[v] = 1;
+end
+
+local function load_options(global)
+ --[[
+    local global_local = {
+
+    };
+--]]
+    local function isEmpty(s)
+        return s == nil or s == "";
+    end
+
+    local conda_prefix = os.getenv("CONDA_PREFIX");
+    if not isEmpty(conda_prefix) then
+        vim.g.python_host_prog = conda_prefix .. "/bin/python";
+        vim.g.python3_host_prog = conda_prefix .. "/bin/python";
+    elseif global.is_mac then
+        vim.g.python_host_prog = "/usr/bin/python";
+        vim.g.python3_host_prog = "/usr/local/bin/python3";
+    else
+        vim.g.python_host_prog = "/usr/bin/python";
+        vim.g.python3_host_prog = "/usr/bin/python3";
+    end
+
+    -- Fix sqlite3 missing-lib issue on Windos
+    if global.is_windows then
+        -- Download the DLLs form https://www.sqlite.org/download.html
+        vim.g.sqlite_clib_path = global.home .. "/Documents/sqlite-dll-win64-x64-3400100/sqlite3.dll";
+    end
 end

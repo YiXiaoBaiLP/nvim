@@ -1,5 +1,8 @@
 -- 加载nvim的基本配置
-require("core.options");
+local options = require("core.options");
+-- 导入全局属性
+local global = require("core.global")
+global:load_variables();
 -- 加载包管理工具
 local packer = require("core.pack");
 -- 加载按键映射
