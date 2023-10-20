@@ -21,4 +21,6 @@ function global:load_variables()
     self.data_dir = string.format("%s/site/", vim.fn.stdpath("data"));
 end
 
+global:load_variables()
+
 return global;

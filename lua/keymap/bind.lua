@@ -8,173 +8,162 @@
 ---@field options.callback function
 ---@field options.desc string
 ---@field buffer boolean|number
-local rhsOptions = {};
+local rhs_options = {}
 
-function rhsOptions:new()
-    local instance = {
-        cmd = "",
-        options = {
-            -- 映射
-            noremap = false,
-            -- 命令不回显
-            silent = false,
-            -- 表达式
-            expr = false,
-            -- 等待
-            nowait = false,
-            -- 回调
-            callback = nil,
-            -- 描述
+function rhs_options:new()
+	local instance = {
+		cmd = "",
+		options = {
+			noremap = false,
+			silent = false,
+			expr = false,
+			nowait = false,
+			callback = nil,
 			desc = "",
-        }
-    };
-    setmetatable(instance, self)
-    self.__index = self;
-    return instance;
+		},
+		buffer = false,
+	}
+	setmetatable(instance, self)
+	self.__index = self
+	return instance
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function rhsOptions:mapCMD(cmdString)
-    self.cmd = cmdString;
-    return self;
+function rhs_options:map_cmd(cmd_string)
+	self.cmd = cmd_string
+	return self
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function rhsOptions:mapCR(cmdString)
-    self.cmd = (":%s<CR>"):format(cmdString);
-    return self;
+function rhs_options:map_cr(cmd_string)
+	self.cmd = (":%s<CR>"):format(cmd_string)
+	return self
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function rhsOptions:mapArgs(cmdString)
-    self.cmd = (":%s<Space>"):format(cmdString);
-    return self;
+function rhs_options:map_args(cmd_string)
+	self.cmd = (":%s<Space>"):format(cmd_string)
+	return self
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function rhsOptions:mapCU(cmdString)
-    self.cmd = (":<C-u>%s<CR>"):format(cmdString);
-    return self;
+function rhs_options:map_cu(cmd_string)
+	-- <C-u> to eliminate the automatically inserted range in visual mode
+	self.cmd = (":<C-u>%s<CR>"):format(cmd_string)
+	return self
 end
 
 ---@param callback fun():nil
 --- Takes a callback that will be called when the key is pressed
 ---@return map_rhs
-function rhsOptions:mapCallback(callback)
+function rhs_options:map_callback(callback)
 	self.cmd = ""
 	self.options.callback = callback
 	return self
 end
 
 ---@return map_rhs
-function rhsOptions:withSilent()
-    self.options.silent = true;
-    return self;
+function rhs_options:with_silent()
+	self.options.silent = true
+	return self
 end
 
----@param descriptionString string
+---@param description_string string
 ---@return map_rhs
-function rhsOptions:withDesc(descriptionString)
-	self.options.desc = descriptionString
+function rhs_options:with_desc(description_string)
+	self.options.desc = description_string
 	return self
 end
 
 ---@return map_rhs
-function rhsOptions:withNoremap()
-    self.options.noremap = true;
-    return self;
+function rhs_options:with_noremap()
+	self.options.noremap = true
+	return self
 end
 
 ---@return map_rhs
-function rhsOptions:withExpr()
-    self.options.expr = true;
-    return self;
+function rhs_options:with_expr()
+	self.options.expr = true
+	return self
 end
 
 ---@return map_rhs
-function rhsOptions:withNowait()
-    self.options.nowait = true;
-    return self;
+function rhs_options:with_nowait()
+	self.options.nowait = true
+	return self
 end
 
 ---@param num number
 ---@return map_rhs
-function rhsOptions:withBuffer(num)
+function rhs_options:with_buffer(num)
 	self.buffer = num
 	return self
 end
 
--- 自定义命令(function)
-function rhsOptions:customComm(cmdString)
-    if(cmdString == nil or type(cmdString) ~= "function") then
-        return;
-    end
-        self.options["callback"] = cmdString;
-    return self;
+local bind = {}
+
+---@param cmd_string string
+---@return map_rhs
+function bind.map_cr(cmd_string)
+	local ro = rhs_options:new()
+	return ro:map_cr(cmd_string)
 end
 
-local bind = {};
-
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function bind.mapCR(cmdString)
-    local ro = rhsOptions:new();
-    return ro:mapCR(cmdString);
+function bind.map_cmd(cmd_string)
+	local ro = rhs_options:new()
+	return ro:map_cmd(cmd_string)
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function bind.mapCMD(cmdString)
-    local ro = rhsOptions:new();
-    return ro:mapCMD(cmdString);
+function bind.map_cu(cmd_string)
+	local ro = rhs_options:new()
+	return ro:map_cu(cmd_string)
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return map_rhs
-function bind.mapCU(cmdString)
-    local ro = rhsOptions:new();
-    return ro:mapCU(cmdString);
-end
-
----@param cmdString string
----@return map_rhs
-function bind.mapArgs(cmdString)
-    local ro = rhsOptions:new();
-    return ro:mapArgs(cmdString);
+function bind.map_args(cmd_string)
+	local ro = rhs_options:new()
+	return ro:map_args(cmd_string)
 end
 
 ---@param callback fun():nil
 ---@return map_rhs
-function bind.mapCallback(callback)
-	local ro = rhsOptions:new()
-	return ro:mapCallback(callback)
+function bind.map_callback(callback)
+	local ro = rhs_options:new()
+	return ro:map_callback(callback)
 end
 
----@param cmdString string
+---@param cmd_string string
 ---@return string escaped_string
-function bind.escape_termcode(cmdString)
-	return vim.api.nvim_replace_termcodes(cmdString, true, true, true)
+function bind.escape_termcode(cmd_string)
+	return vim.api.nvim_replace_termcodes(cmd_string, true, true, true)
 end
 
 ---@param mapping table<string, map_rhs>
-function bind.nvimLoadMapping(mapping)
+function bind.nvim_load_mapping(mapping)
 	for key, value in pairs(mapping) do
-		local mode, keymap = key:match("([^|]*)|?(.*)")
+		local modes, keymap = key:match("([^|]*)|?(.*)")
 		if type(value) == "table" then
-			local rhs = value.cmd
-			local options = value.options
-			local buf = value.buffer
-			if buf and type(buf) == "number" then
-				vim.api.nvim_buf_set_keymap(buf, mode, keymap, rhs, options)
-			else
-				vim.api.nvim_set_keymap(mode, keymap, rhs, options)
+			for _, mode in ipairs(vim.split(modes, "")) do
+				local rhs = value.cmd
+				local options = value.options
+				local buf = value.buffer
+				if buf and type(buf) == "number" then
+					vim.api.nvim_buf_set_keymap(buf, mode, keymap, rhs, options)
+				else
+					vim.api.nvim_set_keymap(mode, keymap, rhs, options)
+				end
 			end
 		end
 	end
 end
 
-return bind;
+return bind

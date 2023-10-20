@@ -1,69 +1,158 @@
-local M = {};
-local api = vim.api;
----------------------------------------------------------------------------------------------
+-- Now use `<A-k>` or `<A-1>` to back to the `dotstutor`.
+local autocmd = {}
 
-function M.nvimCreateAugroups(definitions)
-    for groupName, definition in pairs(definitions) do
-        api.nvim_command('augroup ' .. groupName);
-        api.nvim_command('autocmd!');
-        for _, def in ipairs(definition) do
-            local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ');
-            api.nvim_command(command);
-        end
-        api.nvim_command('augroup END');
-    end
+function autocmd.nvim_create_augroups(definitions)
+	for group_name, definition in pairs(definitions) do
+		vim.api.nvim_command("augroup " .. group_name)
+		vim.api.nvim_command("autocmd!")
+		for _, def in ipairs(definition) do
+			local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
+			vim.api.nvim_command(command)
+		end
+		vim.api.nvim_command("augroup END")
+	end
 end
 
-function M.loadAutoCmds()
-    --[=[
-            BufWritePost：把整个缓冲区写回文件后
-            BufWritePre或BufWrite：把整个缓冲区写回文件前
-            BufWriteCmd：把整个缓冲区写回到文件前。应执行把文件写回的操作并在成功后复位 'modified' 标志，   除非 'cpo'里包含了 '+' 并且写到另一个文件里 |cpo-+|。它不应改动缓冲区的内容。
-    --]=]
-    local definitions = {
-        packer = {
-           -- {"BufWritePost", "*.lua", "lua require('core.Pack').autoCompile()"},
-        },
-        bufs = {
-            -- Reload vim config automatically
-            {
-             "BufWritePost", [[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]]
-            },
-            -- Reload Vim script automatically if setlocal autoread
-            {"BufWritePost, FileWritePost", "*.vim", [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]},
-            {"BufWritePre","/tmp/*","setlocal noundofile"},
-            {"BufWritePre","COMMIT_EDITMSG","setlocal noundofile"},
-            {"BufWritePre","MERGE_MSG","setlocal noundofile"},
-            {"BufWritePre","*.tmp","setlocal noundofile"},
-            {"BufWritePre","*.bak","setlocal noundofile"},
-            {"BufWritePre","*.tsx","lua vim.api.nvim_command('Format')"},
-            {"BufWritePre","*.go","lua require('internal.golines').golines_format()"},
-        },
+-- defer setting LSP-related keymaps till LspAttach
+local mapping = require("keymap.completion")
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("LspKeymapLoader", { clear = true }),
+	callback = function(event)
+		if not _G._debugging then
+			mapping.lsp(event.buf)
+		end
+	end,
+})
 
-        -- 窗口相关
-        wins = {
-            -- Highlight current line only on focused window
-            {"WinEnter,BufEnter,InsertLeave", "*", [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]]},
-            {"WinLeave,BufLeave,InsertEnter", "*", [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]]},
-            -- Equalize window dimensions when resizing vim window
-            {"VimResized", "*", [[tabdo wincmd = ]]},
-            -- Force write shada on leaving nvim
-            {"VimLeave", "*", [[if has('nvim') | wshada! | else | wviminfo! | endif]]},
-            -- Check if file changed when its window is focus, more eager than 'autoread'
-            {"FocusGained", "* checktime"},
-        };
-        -- 文件相关
-        ft = {
-            {"FileType", "dashboard", "set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2"},
-            {"BufNewFile,BufRead", "*.toml", " setf toml"},
-        },
+-- auto close NvimTree
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+	pattern = "NvimTree_*",
+	callback = function()
+		local layout = vim.api.nvim_call_function("winlayout", {})
+		if
+			layout[1] == "leaf"
+			and vim.api.nvim_get_option_value("filetype", { buf = vim.api.nvim_win_get_buf(layout[2]) }) == "NvimTree"
+			and layout[3] == nil
+		then
+			vim.api.nvim_command([[confirm quit]])
+		end
+	end,
+})
 
-        yank = {
-            {"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]},
-        },
-    }
-    M.nvimCreateAugroups(definitions);
+-- auto close some filetype with <q>
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {
+		"qf",
+		"help",
+		"man",
+		"notify",
+		"nofile",
+		"lspinfo",
+		"terminal",
+		"prompt",
+		"toggleterm",
+		"copilot",
+		"startuptime",
+		"tsplayground",
+		"PlenaryTestPopup",
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.api.nvim_buf_set_keymap(event.buf, "n", "q", "<CMD>close<CR>", { silent = true })
+	end,
+})
+
+-- Fix fold issue of files opened by telescope
+vim.api.nvim_create_autocmd("BufRead", {
+	callback = function()
+		vim.api.nvim_create_autocmd("BufWinEnter", {
+			once = true,
+			command = "normal! zx",
+		})
+	end,
+})
+
+function autocmd.load_autocmds()
+	local definitions = {
+		lazy = {},
+		bufs = {
+			-- Reload vim config automatically
+			{
+				"BufWritePost",
+				[[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]],
+			},
+			-- Reload Vim script automatically if setlocal autoread
+			{
+				"BufWritePost,FileWritePost",
+				"*.vim",
+				[[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
+			},
+			{ "BufWritePre", "/tmp/*", "setlocal noundofile" },
+			{ "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
+			{ "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
+			{ "BufWritePre", "*.tmp", "setlocal noundofile" },
+			{ "BufWritePre", "*.bak", "setlocal noundofile" },
+			-- auto place to last edit
+			{
+				"BufReadPost",
+				"*",
+				[[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]],
+			},
+			-- Auto toggle fcitx5
+			-- {"InsertLeave", "* :silent", "!fcitx5-remote -c"},
+			-- {"BufCreate", "*", ":silent !fcitx5-remote -c"},
+			-- {"BufEnter", "*", ":silent !fcitx5-remote -c "},
+			-- {"BufLeave", "*", ":silent !fcitx5-remote -c "}
+		},
+		wins = {
+			-- Highlight current line only on focused window
+			{
+				"WinEnter,BufEnter,InsertLeave",
+				"*",
+				[[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+			},
+			{
+				"WinLeave,BufLeave,InsertEnter",
+				"*",
+				[[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
+			},
+			-- Attempt to write shada when leaving nvim
+			{
+				"VimLeave",
+				"*",
+				[[if has('nvim') | wshada | else | wviminfo! | endif]],
+			},
+			-- Check if file changed when its window is focus, more eager than 'autoread'
+			{ "FocusGained", "* checktime" },
+			-- Equalize window dimensions when resizing vim window
+			{ "VimResized", "*", [[tabdo wincmd =]] },
+		},
+		ft = {
+			{ "FileType", "alpha", "set showtabline=0" },
+			{ "FileType", "markdown", "set wrap" },
+			{ "FileType", "make", "set noexpandtab shiftwidth=8 softtabstop=0" },
+			{ "FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()" },
+			{
+				"FileType",
+				"*",
+				[[setlocal formatoptions-=cro]],
+			},
+			{
+				"FileType",
+				"c,cpp",
+				"nnoremap <leader>h :ClangdSwitchSourceHeaderVSplit<CR>",
+			},
+		},
+		yank = {
+			{
+				"TextYankPost",
+				"*",
+				[[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]],
+			},
+		},
+	}
+	autocmd.nvim_create_augroups(require("modules.utils").extend_config(definitions, "user.event"))
 end
 
----------------------------------------------------------------------------------------------
-return M;
+autocmd.load_autocmds()
