@@ -15,4 +15,4 @@
         ```
 
 
-#### 当前配置基于[ayamir/nvimdots](https://github.dev/ayamir/nvimdots)🙏感谢
+#### 当前配置基于[ayamir/nvimdots](https://github.com/ayamir/nvimdots)🙏感谢
